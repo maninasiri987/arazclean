@@ -216,7 +216,6 @@ textarea {
   bottom: 1.25rem !important;
 }
 
-/* بولت‌های صفحه‌بندی — اندازهٔ ثابت و بدون حالت داینامیک */
 .hero-swiper .swiper-pagination-bullet {
   background: rgb(255 255 255 / 0.55);
   opacity: 1;
@@ -228,11 +227,20 @@ textarea {
 
 .hero-swiper .swiper-pagination-bullet-active {
   background: #ffffff;
+  width: 8px;
+  height: 8px;
 }
 
 .hero-swiper .swiper-pagination-bullet:focus-visible {
   outline: 2px solid #ffffff;
   outline-offset: 2px;
+}
+
+/* موبایل: دکمه‌های قبلی/بعدی و نقاط صفحه‌بندی نمایش داده نمی‌شوند */
+@media (max-width: 640px) {
+  .hero-swiper .swiper-pagination {
+    display: none;
+  }
 }
 
 /* احترام به تنظیم کاهش حرکت کاربر */

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Search as SearchIcon, TrendingUp } from "lucide-react";
 import { getNavigation } from "../../services/catalog.js";
@@ -85,20 +84,18 @@ export default function Search({ className = "" }) {
 
   return (
     <>
-      {/* کم‌رنگ‌شدن پس‌زمینه هنگام فوکوس — پورتال به body تا زیر هدر باشد */}
-      {(open || closing) &&
-        createPortal(
-          <div
-            className={`fixed inset-0 z-40 bg-ink/75 backdrop-blur-[2px] ${
-              closing ? "fade-out" : "fade-in"
-            }`}
-            onClick={closeSearch}
-            aria-hidden="true"
-          />,
-          document.body
-        )}
+      {/* کم‌رنگ‌شدن پس‌زمینه هنگام فوکوس — کل صفحه (از جمله هدر) تیره می‌شود */}
+      {(open || closing) && (
+        <div
+          className={`fixed inset-0 z-40 bg-ink/75 backdrop-blur-[2px] ${
+            closing ? "fade-out" : "fade-in"
+          }`}
+          onClick={closeSearch}
+          aria-hidden="true"
+        />
+      )}
 
-      <div ref={containerRef} role="search" className={`relative ${className}`}>
+      <div ref={containerRef} role="search" className={`relative z-50 ${className}`}>
         <div className="relative flex items-center">
           <SearchIcon
             aria-hidden="true"

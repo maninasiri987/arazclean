@@ -21,7 +21,7 @@ export default function HomePage() {
         description="آراز کلین؛ فروشگاه تخصصی محصولات نظافت و شوینده با ضمانت اصالت کالا و ارسال سریع به سراسر کشور."
       />
 
-      <div className="space-y-14 pb-16 sm:space-y-20">
+      <div className="space-y-14 pb-16 pt-4 sm:space-y-20 sm:pt-6">
         <HeroSlider />
         <ValuePropsStrip />
 

@@ -41,7 +41,9 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const secondRowClasses = `overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+  // توجه: overflow-hidden فقط برای انیمیشن جمع‌شدن است؛ هنگام فوکوس جستجو باید
+  // منوی کشویی بیرون از ردیف دیده شود (focus-within آن را موقتاً برمی‌دارد)
+  const secondRowClasses = `overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-within:overflow-visible ${
     navHidden ? "max-h-0 opacity-0" : "max-h-16 opacity-100"
   }`;
 
@@ -57,6 +59,14 @@ export default function Header() {
           <Search className="w-full max-w-sm" />
 
           <div className="ms-auto flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              aria-label="ورود یا ثبت‌نام"
+              className="group flex cursor-pointer items-center gap-2 rounded-xl border border-brand-500 bg-transparent px-4 py-2.5 text-sm font-bold text-brand-600 transition-[color,background-color,transform] hover:bg-brand-500 hover:text-white active:scale-95"
+            >
+              <LogIn className="size-4 -scale-x-100" aria-hidden="true" />
+              ورود / ثبت‌نام
+            </button>
             <Link
               to="/cart"
               aria-label={`سبد خرید — ${formatNumber(count)} کالا`}
@@ -72,14 +82,6 @@ export default function Header() {
                 </span>
               )}
             </Link>
-            <button
-              type="button"
-              aria-label="ورود یا ثبت‌نام"
-              className="group flex cursor-pointer items-center gap-2 rounded-xl border border-brand-500 bg-transparent px-4 py-2.5 text-sm font-bold text-brand-600 transition-[color,background-color,transform] hover:bg-brand-500 hover:text-white active:scale-95"
-            >
-              <LogIn className="size-4 -scale-x-100" aria-hidden="true" />
-              ورود / ثبت‌نام
-            </button>
           </div>
         </div>
         <div className={secondRowClasses}>

@@ -45,7 +45,7 @@ export default function MobileMenu({ open, onClose }) {
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-[70] md:hidden">
+        <div className="fixed inset-0 z-[70] lg:hidden">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -111,13 +111,13 @@ export default function MobileMenu({ open, onClose }) {
                 <Phone className="size-4 text-brand-500" aria-hidden="true" />
                 {phone}
               </Link>
-              <Link
-                to="/products"
-                className="flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-600"
+              <button
+                type="button"
+                className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-500 px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-600"
               >
                 <LogIn className="size-4" aria-hidden="true" />
                 ورود / ثبت‌نام
-              </Link>
+              </button>
             </div>
           </motion.aside>
         </div>

@@ -7,9 +7,11 @@ import { routeLoaders } from "../routes.js";
  */
 export const prefetchPage = (to) => {
   if (!to) return;
+  // کوئری‌استرینگ را حذف می‌کنیم تا /products?sort=… هم با مسیر /products هم‌خوانی کند
+  const path = to.split("?")[0];
   const key =
     Object.keys(routeLoaders).find(
-      (route) => to === route || to.startsWith(route + "/")
+      (route) => path === route || path.startsWith(route + "/")
     ) || "";
   const loader = routeLoaders[key];
   if (loader) loader().catch(() => {});

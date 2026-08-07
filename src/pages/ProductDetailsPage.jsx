@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CheckCircle2, ShoppingCart, Truck } from "lucide-react";
 import Seo from "../components/common/Seo.jsx";
@@ -25,6 +25,13 @@ export default function ProductDetailsPage() {
 
   const [qty, setQty] = useState(1);
   const [activeView, setActiveView] = useState(1);
+
+  // هنگام رفتن از یک محصول به محصول دیگر (لینک محصولات مرتبط)،
+  // تعداد و نمای انتخاب‌شدهٔ قبلی نباید باقی بماند
+  useEffect(() => {
+    setQty(1);
+    setActiveView(1);
+  }, [slug]);
 
   if (!product) return <NotFoundPage />;
 
