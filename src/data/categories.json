@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "dishwashing",
+    "title": "ظرف‌شویی",
+    "description": "مایع ظرف‌شویی، قرص ماشین ظرف‌شویی و اسکاچ‌های باکیفیت برای شست‌وشوی روزانه",
+    "icon": "dish",
+    "placeholder": "category",
+    "featured": true
+  },
+  {
+    "slug": "laundry",
+    "title": "لباس‌شویی",
+    "description": "پودر، مایع و نرم‌کنندهٔ لباس با رایحه‌های ماندگار و قدرت پاک‌کنندگی بالا",
+    "icon": "laundry",
+    "placeholder": "category",
+    "featured": true
+  },
+  {
+    "slug": "disinfectant",
+    "title": "ضدعفونی و گندزدایی",
+    "description": "محصولات ضدعفونی‌کنندهٔ سطوح، دست و محیط برای سلامت خانواده",
+    "icon": "shield",
+    "placeholder": "category",
+    "featured": true
+  },
+  {
+    "slug": "glass-surfaces",
+    "title": "شیشه و سطوح",
+    "description": "شیشه‌پاک‌کن‌ها و محلول‌های چندمنظوره برای سطوح براق و بدون لک",
+    "icon": "sparkles",
+    "placeholder": "category",
+    "featured": true
+  },
+  {
+    "slug": "towels-cloths",
+    "title": "دستمال و حوله",
+    "description": "دستمال میکروفایبر، تی و دستمال کاغذی نرم و پرجذب",
+    "icon": "layers",
+    "placeholder": "category",
+    "featured": true
+  },
+  {
+    "slug": "air-freshener",
+    "title": "خوشبوکننده",
+    "description": "خوشبوکنندهٔ محیط، ماشین و شمع‌های معطر برای فضایی دل‌نشین",
+    "icon": "wind",
+    "placeholder": "category",
+    "featured": false
+  },
+  {
+    "slug": "cleaning-tools",
+    "title": "ادوات نظافت",
+    "description": "اسکاچ، برس، سطل و ابزارهای حرفه‌ای نظافت منزل و محل کار",
+    "icon": "brush",
+    "placeholder": "category",
+    "featured": false
+  },
+  {
+    "slug": "industrial",
+    "title": "شوینده صنعتی",
+    "description": "محصولات پرقدرت برای هتل‌ها، رستوران‌ها، بیمارستان‌ها و مراکز صنعتی",
+    "icon": "factory",
+    "placeholder": "category",
+    "featured": false
+  }
+]

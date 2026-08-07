@@ -1,0 +1,82 @@
+[
+  {
+    "slug": "araz-clean",
+    "name": "آراز کلین",
+    "tagline": "برند اصلی محصولات نظافت",
+    "description": "برند تخصصی آراز کلین با فرمول‌های بهینه و رایحه‌های دل‌پذیر، استاندارد تازه‌ای در نظافت خانه است.",
+    "placeholder": "brand",
+    "featured": true
+  },
+  {
+    "slug": "ocean",
+    "name": "اقیانوس",
+    "tagline": "قدرت پاک‌کنندگی طبیعت",
+    "description": "محصولات اقیانوس با ترکیبات گیاهی و بسته‌بندی سازگار با محیط زیست تولید می‌شوند.",
+    "placeholder": "brand",
+    "featured": true
+  },
+  {
+    "slug": "derakhshan",
+    "name": "درخشش",
+    "tagline": "درخششی که می‌بینید",
+    "description": "درخشش به‌عنوان یکی از قدیمی‌ترین برندهای شوینده، همواره همراه خانه‌های ایرانی بوده است.",
+    "placeholder": "brand",
+    "featured": true
+  },
+  {
+    "slug": "satrap",
+    "name": "سطرب",
+    "tagline": "متخصص سطوح و لباس",
+    "description": "محصولات تخصصی سطرب برای پاکیزگی عمیق و ماندگار سطوح مختلف طراحی شده‌اند.",
+    "placeholder": "brand",
+    "featured": true
+  },
+  {
+    "slug": "gandza",
+    "name": "گندزا",
+    "tagline": "ضدعفونی مطمئن",
+    "description": "گندزا با فرمول‌های تأییدشده، امنیت سلامت خانواده شما را در برابر میکروب‌ها تضمین می‌کند.",
+    "placeholder": "brand",
+    "featured": true
+  },
+  {
+    "slug": "nanopak",
+    "name": "نانوپاک",
+    "tagline": "فناوری نانو در نظافت",
+    "description": "نانوپاک با بهره‌گیری از فناوری نانو، محافظت طولانی‌مدت و پاک‌کنندگی فراتر از معمول ارائه می‌دهد.",
+    "placeholder": "brand",
+    "featured": false
+  },
+  {
+    "slug": "steel-pak",
+    "name": "استیل پاک",
+    "tagline": "برای مراکز حرفه‌ای",
+    "description": "محصولات حرفه‌ای استیل پاک ویژهٔ هتل‌ها، رستوران‌ها و مراکز صنعتی.",
+    "placeholder": "brand",
+    "featured": false
+  },
+  {
+    "slug": "taze-nafas",
+    "name": "تازه‌نفس",
+    "tagline": "هوای تازه در خانه",
+    "description": "تازه‌نفس برند تخصصی خوشبوکننده‌ها و شیشه‌پاک‌کن‌ها با رایحه‌های الهام‌گرفته از طبیعت است.",
+    "placeholder": "brand",
+    "featured": false
+  },
+  {
+    "slug": "paksho",
+    "name": "پاکشو",
+    "tagline": "ابزار نظافت هوشمند",
+    "description": "پاکشو تولیدکنندهٔ ابزارهای مدرن نظافت مانند دستمال‌های میکروفایبر و اسکاچ‌های چندکاره است.",
+    "placeholder": "brand",
+    "featured": false
+  },
+  {
+    "slug": "niloufar",
+    "name": "نیلوفر",
+    "tagline": "رایحهٔ زندگی",
+    "description": "نیلوفر با عطرهای اصیل و ماندگار، لحظه‌های خانه شما را دل‌نشین می‌کند.",
+    "placeholder": "brand",
+    "featured": false
+  }
+]

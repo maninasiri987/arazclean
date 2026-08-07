@@ -1,0 +1,19 @@
+{
+  "siteName": "آراز کلین",
+  "tagline": "فروشگاه تخصصی محصولات نظافت و شوینده",
+  "description": "آراز کلین، فروشگاه آنلاین محصولات نظافت و شوینده؛ ارائهٔ باکیفیت‌ترین محصولات برندهای معتبر با قیمت منصفانه و ارسال سریع به سراسر کشور.",
+  "phone": "۰۹۱۴۶۶۵۹۱۷۱",
+  "email": "info@arazclean.ir",
+  "workHours": "همه‌روزه، ۲۴ ساعته",
+  "socials": [
+    { "id": "instagram", "label": "اینستاگرام", "url": "https://instagram.com" },
+    { "id": "telegram", "label": "تلگرام", "url": "https://telegram.org" },
+    { "id": "whatsapp", "label": "واتس‌اپ", "url": "https://whatsapp.com" },
+    { "id": "linkedin", "label": "لینکدین", "url": "https://linkedin.com" }
+  ],
+  "copyright": "© ۱۴۰۵ آراز کلین — تمامی حقوق محفوظ است.",
+  "newsletter": {
+    "title": "از تخفیف‌ها زودتر باخبر شوید",
+    "description": "عضو خبرنامه شوید تا از تخفیف‌های ویژه و محصولات جدید اولین نفر باشید."
+  }
+}

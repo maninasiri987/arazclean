@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="آراز کلین — فروشگاه آنلاین محصولات نظافت و شوینده" />
+    <title>آراز کلین</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" href="/fonts/BYekan+.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/BYekan-Bold.ttf" as="font" type="font/ttf" crossorigin />
+  </head>
+  <body>
+    <div id="root">
+      <!-- لودر اولیه — انیمیشن ساده در مرکز صفحه (قبل از بارگذاری جاوااسکریپت) -->
+      <div class="boot-screen" role="status" aria-label="در حال بارگذاری">
+        <div class="boot-center">
+          <div class="boot-spinner" aria-hidden="true"></div>
+        </div>
+      </div>
+      <style>
+        .boot-screen {
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #ffffff;
+        }
+        .boot-center {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .boot-spinner {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          border: 4px solid rgba(14, 165, 164, 0.15);
+          border-top-color: #0ea5a4;
+          animation: boot-spin 0.9s linear infinite;
+        }
+        @keyframes boot-spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .boot-spinner {
+            animation: none;
+          }
+        }
+      </style>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

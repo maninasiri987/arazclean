@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "badge": "پیشنهاد هفته",
+    "title": "خانه‌ای تمیزتر با آراز کلین",
+    "description": "کامل‌ترین سبد محصولات نظافت و شوینده برای هر گوشه از خانه شما؛ از ظرف‌شویی تا ضدعفونی‌کننده‌های حرفه‌ای.",
+    "ctaLabel": "مشاهده محصولات",
+    "ctaTo": "/products",
+    "image": "radial-gradient(1100px 520px at 88% -8%, rgba(255,255,255,0.28), transparent 60%), radial-gradient(720px 420px at 4% 112%, rgba(255,255,255,0.14), transparent 55%), linear-gradient(130deg, #115e59 0%, #0ea5a4 52%, #5eead4 140%)"
+  },
+  {
+    "id": 2,
+    "badge": "جشنوارهٔ تابستانه",
+    "title": "تا ۳۰٪ تخفیف شوینده‌ها",
+    "description": "به مناسبت جشنوارهٔ تابستانه، منتخبی از پرفروش‌ترین شوینده‌ها با تخفیف‌های استثنایی عرضه شده‌اند.",
+    "ctaLabel": "خرید با تخفیف",
+    "ctaTo": "/products?sort=price-asc",
+    "image": "radial-gradient(1000px 500px at 92% -10%, rgba(255,255,255,0.25), transparent 55%), radial-gradient(760px 420px at 6% 110%, rgba(255,255,255,0.13), transparent 55%), linear-gradient(130deg, #1e3a8a 0%, #2563eb 52%, #93c5fd 145%)"
+  },
+  {
+    "id": 3,
+    "badge": "ضدعفونی مطمئن",
+    "title": "سلامت خانواده با ضدعفونی‌کننده‌ها",
+    "description": "محصولات ضدعفونی با قدرت حذف ۹۹.۹٪ باکتری‌ها و ویروس‌ها؛ محیطی امن برای عزیزانتان بسازید.",
+    "ctaLabel": "مشاهده ضدعفونی‌کننده‌ها",
+    "ctaTo": "/category/disinfectant",
+    "image": "radial-gradient(1050px 520px at 10% -8%, rgba(255,255,255,0.22), transparent 55%), radial-gradient(720px 400px at 92% 112%, rgba(255,255,255,0.14), transparent 55%), linear-gradient(130deg, #14532d 0%, #16a34a 55%, #86efac 150%)"
+  },
+  {
+    "id": 4,
+    "badge": "محصولات جدید",
+    "title": "تازه‌های آراز کلین را کشف کنید",
+    "description": "جدیدترین محصولات نظافت با فناوری نانو، رایحه‌های دل‌پذیر و بسته‌بندی‌های سازگار با محیط زیست.",
+    "ctaLabel": "مشاهده تازه‌ها",
+    "ctaTo": "/products?sort=newest",
+    "image": "radial-gradient(1000px 500px at 90% -6%, rgba(255,255,255,0.2), transparent 55%), radial-gradient(700px 420px at 4% 112%, rgba(255,255,255,0.12), transparent 55%), linear-gradient(130deg, #134e4a 0%, #0f766e 50%, #2dd4bf 145%)"
+  }
+]

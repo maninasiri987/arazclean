@@ -1,0 +1,41 @@
+{
+  "mainNav": [
+    { "label": "خانه", "to": "/", "match": "/" },
+    { "label": "محصولات", "to": "/products", "match": "/products" },
+    { "label": "دسته‌بندی‌ها", "to": "/products", "match": "categories" },
+    { "label": "برندها", "to": "/brands", "match": "/brands" },
+    { "label": "مجله", "to": "/blog", "match": "/blog" },
+    { "label": "درباره ما", "to": "/about", "match": "/about" },
+    { "label": "تماس با ما", "to": "/contact", "match": "/contact" }
+  ],
+  "footerNav": [
+    {
+      "title": "دسترسی سریع",
+      "links": [
+        { "label": "صفحه اصلی", "to": "/" },
+        { "label": "همهٔ محصولات", "to": "/products" },
+        { "label": "دسته‌بندی‌ها", "to": "/products" },
+        { "label": "برندها", "to": "/brands" },
+        { "label": "مجله آراز کلین", "to": "/blog" }
+      ]
+    },
+    {
+      "title": "خدمات مشتریان",
+      "links": [
+        { "label": "درباره ما", "to": "/about" },
+        { "label": "تماس با ما", "to": "/contact" },
+        { "label": "سبد خرید", "to": "/cart" },
+        { "label": "سوالات متداول", "to": "/contact" },
+        { "label": "حریم خصوصی", "to": "/about" }
+      ]
+    }
+  ],
+  "popularSearches": [
+    "مایع ظرف‌شویی",
+    "شیشه‌پاک‌کن",
+    "ضدعفونی‌کننده",
+    "دستمال میکروفایبر",
+    "خوشبوکننده هوا",
+    "پودر لباسشویی"
+  ]
+}

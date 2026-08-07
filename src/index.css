@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+/* ============================================================
+   فونت Yekan Bakh (B Yekan+)
+   فایل‌ها در پوشهٔ public/fonts قرار دارند:
+   BYekan+.ttf (معمولی) و BYekan-Bold.ttf (ضخیم)
+   ============================================================ */
+
+@font-face {
+  font-family: "B Yekan+";
+  src: url("/fonts/BYekan+.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "B Yekan+";
+  src: url("/fonts/BYekan-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ============================================================
+   آراز کلین — پوستهٔ پایه
+   ============================================================ */
+
+@theme {
+  /* ---------- فونت ---------- */
+  --font-sans: "B Yekan+", "Vazirmatn", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ---------- رنگ‌های برند ---------- */
+  /* رنگ‌های اصلی (دقیقاً از برند): */
+  --color-brand-500: #0ea5a4;   /* Primary / Brand */
+  --color-trust-500: #2563eb;   /* Secondary / Trust */
+  --color-success-500: #22c55e; /* Success */
+  --color-background: #f8fafc;  /* Page Background */
+  --color-card: #ffffff;        /* Card Background */
+  --color-line: #e2e8f0;        /* Border */
+  --color-ink: #0f172a;         /* Primary Text */
+  --color-muted: #475569;       /* Secondary Text */
+
+  /* سایه‌های کمکی (مشتق‌شده برای hover/حالت‌ها — قابل تغییر): */
+  --color-brand-50: #e7f6f6;
+  --color-brand-100: #ccecec;
+  --color-brand-600: #0c8e8d;
+  --color-brand-700: #0a7776;
+  --color-trust-50: #ebf1fe;
+  --color-trust-600: #1d4ed8;
+  --color-success-50: #ecfdf3;
+  --color-success-600: #16a34a;
+
+  /* ---------- گردی گوشه‌ها ---------- */
+  --radius-card: 1rem;
+  --radius-lg: 1.25rem;
+  --radius-pill: 9999px;
+
+  /* ---------- سایه‌های سبک (بدون سایه‌های سنگین) ---------- */
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.05);
+  --shadow-card-hover: 0 4px 12px -2px rgb(15 23 42 / 0.08);
+  --shadow-pop: 0 16px 40px -16px rgb(15 23 42 / 0.18);
+  --shadow-soft: 0 2px 8px -2px rgb(15 23 42 / 0.06);
+
+  /* ---------- ظرف ---------- */
+  --container-site: 80rem;
+}
+
+/* فوکوس قابل‌مشاهده برای همه‌جا — دسترس‌پذیری.
+   (بدون تغییر border-radius؛ حلقهٔ فوکوس خودکار هم‌شکل با گردی همان المان است) */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(12 142 141 / 0.35);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--color-background);
+  color: var(--color-ink);
+}
+
+/* فرم‌ها هم از همان فونت استفاده کنند */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background-color: var(--color-brand-100, #ccecec);
+}
+
+/* ---------- انیمیشن‌های کشویی جستجو ---------- */
+
+/* ورود پنجرهٔ جستجو — با کمی مقیاس و نرمی فنری */
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.search-dropdown-in {
+  animation: dropdown-in 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top center;
+}
+
+/* خروج پنجرهٔ جستجو */
+@keyframes dropdown-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+}
+
+.search-dropdown-out {
+  animation: dropdown-out 0.18s ease-in forwards;
+}
+
+/* پس‌زمینهٔ تیره */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.22s ease-out;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fade-out 0.18s ease-in forwards;
+}
+
+/* ورود پلکانی آیتم‌های جستجو */
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.search-chip {
+  animation: chip-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------- لودر اولیهٔ سایت — طراحی ساده: اسپینر کلاسیک ---------- */
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.boot-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boot-spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 4px solid rgb(14 165 164 / 0.15);
+  border-top-color: #0ea5a4;
+  animation: boot-spin 0.9s linear infinite;
+}
+
+@keyframes boot-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- عملکرد: بخش‌های پایین صفحه فقط هنگام نزدیک‌شدن رندر می‌شوند ---------- */
+.cv-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+
+/* ---------- اسلایدر هیرو — رنگ بولت‌های صفحه‌بندی روی پس‌زمینهٔ تیره ---------- */
+.hero-swiper .swiper-pagination {
+  bottom: 1.25rem !important;
+}
+
+/* بولت‌های صفحه‌بندی — اندازهٔ ثابت و بدون حالت داینامیک */
+.hero-swiper .swiper-pagination-bullet {
+  background: rgb(255 255 255 / 0.55);
+  opacity: 1;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  transition: background-color 0.25s ease;
+}
+
+.hero-swiper .swiper-pagination-bullet-active {
+  background: #ffffff;
+}
+
+.hero-swiper .swiper-pagination-bullet:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* احترام به تنظیم کاهش حرکت کاربر */
+@media (prefers-reduced-motion: reduce) {
+  .boot-spinner,
+  .search-dropdown-in,
+  .search-dropdown-out,
+  .fade-in,
+  .fade-out,
+  .search-chip {
+    animation: none;
+  }
+}
