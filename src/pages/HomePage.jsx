@@ -5,7 +5,6 @@ import ValuePropsStrip from "../components/home/ValuePropsStrip.jsx";
 import CategoryRow from "../components/home/CategoryRow.jsx";
 import PromoBanner from "../components/home/PromoBanner.jsx";
 import BrandLogoGrid from "../components/home/BrandLogoGrid.jsx";
-import BlogRow from "../components/home/BlogRow.jsx";
 import Newsletter from "../components/home/Newsletter.jsx";
 import SectionTitle from "../components/ui/SectionTitle.jsx";
 import ProductGrid from "../components/product/ProductGrid.jsx";
@@ -54,7 +53,6 @@ export default function HomePage() {
         </section>
 
         <BrandLogoGrid />
-        <BlogRow />
         <Newsletter />
       </div>
     </>

@@ -52,10 +52,19 @@ export default function CartPage() {
                   >
                     <Link
                       to={`/product/${product.slug}`}
-                      className="w-24 shrink-0 overflow-hidden rounded-lg"
+                      className="w-24 shrink-0 overflow-hidden rounded-lg border border-line bg-card"
                       aria-label={product.title}
                     >
-                      <ImagePlaceholder type="product" aspect="aspect-square" />
+                      {product.image ? (
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          loading="lazy"
+                          className="aspect-square w-full object-contain bg-card p-1.5"
+                        />
+                      ) : (
+                        <ImagePlaceholder type="product" aspect="aspect-square" />
+                      )}
                     </Link>
                     <div className="flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">
@@ -98,7 +107,7 @@ export default function CartPage() {
             </ul>
 
             {/* خلاصه */}
-            <aside className="h-fit rounded-card border border-line bg-card p-6 shadow-card lg:sticky lg:top-36">
+            <aside className="h-fit rounded-card border border-line bg-card p-6 shadow-card lg:sticky lg:top-[calc(var(--header-offset,122px)+16px)]">
               <h2 className="text-lg font-black text-ink">خلاصه سفارش</h2>
               <dl className="mt-4 space-y-3 border-b border-line pb-4 text-sm">
                 <div className="flex items-center justify-between">

@@ -34,7 +34,7 @@ export function ToastProvider({ children }) {
       {typeof document !== "undefined" &&
         createPortal(
           <div
-            className="pointer-events-none fixed bottom-6 left-1/2 z-[90] flex w-full max-w-sm -translate-x-1/2 flex-col items-center gap-2 px-4"
+            className="pointer-events-none fixed bottom-24 left-1/2 z-[90] flex w-full max-w-sm -translate-x-1/2 flex-col items-center gap-2 px-4 lg:bottom-6"
             aria-live="polite"
             role="status"
           >

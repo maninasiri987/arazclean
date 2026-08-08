@@ -1,7 +1,6 @@
 import productsData from "../data/products.json";
 import categoriesData from "../data/categories.json";
 import brandsData from "../data/brands.json";
-import blogData from "../data/blog.json";
 import heroData from "../data/hero.json";
 import navigationData from "../data/navigation.json";
 import settingsData from "../data/settings.json";
@@ -31,12 +30,20 @@ export const getRelatedProducts = (product, limit = 4) =>
     .filter(
       (p) =>
         p.id !== product.id &&
-        (p.categorySlug === product.categorySlug || p.brandSlug === product.brandSlug)
+        (p.categorySlug === product.categorySlug ||
+          p.subcategorySlug === product.subcategorySlug ||
+          p.brandSlug === product.brandSlug)
     )
     .slice(0, limit);
 
 export const getProductsByCategory = (categorySlug) =>
   productsData.filter((p) => p.categorySlug === categorySlug);
+
+export const getProductsBySubcategory = (categorySlug, subcategorySlug) =>
+  productsData.filter(
+    (p) =>
+      p.categorySlug === categorySlug && p.subcategorySlug === subcategorySlug
+  );
 
 export const getProductsByBrand = (brandSlug) =>
   productsData.filter((p) => p.brandSlug === brandSlug);
@@ -47,25 +54,26 @@ export const getCategories = () => categoriesData;
 export const getCategoryBySlug = (slug) =>
   categoriesData.find((c) => c.slug === slug) || null;
 
-// ---------- Brands ----------
-export const getBrands = () => brandsData;
+// ---------- Brands (پویا — از دادهٔ محصولات استخراج می‌شوند) ----------
+/**
+ * برندهای یکتا که محصول دارند — با ادغام متادیتای برند (توضیح، لوگو و…).
+ * اگر برندی در `brands.json` باشد اما محصولی نداشته باشد، نمایش داده نمی‌شود.
+ */
+export const getBrands = () => {
+  const seen = new Map();
+  productsData.forEach((p) => {
+    if (!seen.has(p.brandSlug)) {
+      seen.set(p.brandSlug, { slug: p.brandSlug, name: p.brand });
+    }
+  });
+  return Array.from(seen.values()).map((brand) => {
+    const meta = brandsData.find((b) => b.slug === brand.slug) || {};
+    return { ...meta, ...brand };
+  });
+};
 
 export const getBrandBySlug = (slug) =>
-  brandsData.find((b) => b.slug === slug) || null;
-
-// ---------- Blog ----------
-export const getBlogPosts = () => blogData;
-
-export const getBlogPostBySlug = (slug) =>
-  blogData.find((b) => b.slug === slug) || null;
-
-export const getFeaturedBlogPosts = (limit = 3) => {
-  const featured = blogData.filter((b) => b.featured);
-  if (featured.length >= limit) return featured.slice(0, limit);
-  // اگر مقالهٔ ویژهٔ کافی نبود، بقیه را از سایر مقالات پر می‌کنیم
-  const rest = blogData.filter((b) => !b.featured);
-  return [...featured, ...rest].slice(0, limit);
-};
+  getBrands().find((b) => b.slug === slug) || null;
 
 // ---------- Hero ----------
 export const getHeroSlides = () => heroData;

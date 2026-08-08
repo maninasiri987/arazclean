@@ -7,9 +7,10 @@ import {
   ShieldCheck,
   Sparkles,
   Layers,
-  Wind,
+  Droplets,
+  Baby,
   Brush,
-  Factory,
+  Star,
   ChevronLeft,
 } from "lucide-react";
 import ImagePlaceholder from "../ui/ImagePlaceholder.jsx";
@@ -22,17 +23,19 @@ const icons = {
   shield: ShieldCheck,
   sparkles: Sparkles,
   layers: Layers,
-  wind: Wind,
+  droplets: Droplets,
+  baby: Baby,
   brush: Brush,
-  factory: Factory,
+  star: Star,
 };
 
 /**
- * کارت دسته‌بندی — آیکون + تصویر + تعداد محصولات
+ * کارت دسته‌بندی — آیکون + تصویر + تعداد محصولات و زیردسته‌ها
  */
 function CategoryCard({ category }) {
   const Icon = icons[category.icon] || Layers;
   const count = getProductsByCategory(category.slug).length;
+  const subCount = category.subcategories?.length || 0;
 
   return (
     <Link
@@ -56,6 +59,9 @@ function CategoryCard({ category }) {
         </p>
         <p className="mt-2 flex items-center gap-1 text-xs font-bold text-brand-100">
           {formatNumber(count)} محصول
+          {subCount > 0 && (
+            <span className="text-white/60">· {formatNumber(subCount)} زیردسته</span>
+          )}
           <ChevronLeft className="size-3.5 transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true" />
         </p>
       </div>

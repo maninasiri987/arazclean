@@ -1,4 +1,4 @@
-import { ImageIcon, Sparkles, Factory, Newspaper, Layers, BadgePercent } from "lucide-react";
+import { ImageIcon, Sparkles, Layers, BadgePercent } from "lucide-react";
 
 const config = {
   product: {
@@ -16,11 +16,6 @@ const config = {
     gradient: "from-background via-card to-background",
     icon: Sparkles,
   },
-  blog: {
-    label: "تصویر مقاله",
-    gradient: "from-brand-50 via-card to-trust-50/60",
-    icon: Newspaper,
-  },
   hero: {
     label: "تصویر اسلایدر",
     gradient: "from-brand-500/10 via-card to-trust-500/10",
@@ -30,11 +25,6 @@ const config = {
     label: "تصویر تبلیغاتی",
     gradient: "from-brand-500/15 via-card to-trust-500/15",
     icon: BadgePercent,
-  },
-  industrial: {
-    label: "تصویر صنعتی",
-    gradient: "from-slate-200 via-card to-brand-100/60",
-    icon: Factory,
   },
 };
 

@@ -30,7 +30,7 @@ export default function BackToTop() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-40 flex size-11 cursor-pointer items-center justify-center rounded-full bg-brand-500 text-white shadow-pop transition-colors hover:bg-brand-600 focus-visible:ring-4 focus-visible:ring-brand-500/20"
+          className="fixed bottom-24 right-6 z-40 flex size-11 cursor-pointer items-center justify-center rounded-full bg-brand-500 text-white shadow-pop transition-colors hover:bg-brand-600 focus-visible:ring-4 focus-visible:ring-brand-500/20 lg:bottom-6"
         >
           <ArrowUp className="size-5" aria-hidden="true" />
         </motion.button>

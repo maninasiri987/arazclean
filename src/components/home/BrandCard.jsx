@@ -6,19 +6,30 @@ import { formatNumber } from "../../utils/format.js";
 import { prefetchPage } from "../../utils/prefetch.js";
 
 /**
- * کارت برند — لوگو + نام + تعداد محصولات
+ * کارت برند — لوگو + نام + تعداد محصولات.
+ * اگر برند `logo` داشته باشد (در آینده)، همان نمایش داده می‌شود؛
+ * در غیر این صورت جای‌نویس لوگو نشان داده می‌شود.
  */
 function BrandCard({ brand }) {
   const count = getProductsByBrand(brand.slug).length;
 
   return (
     <Link
-      to={`/products?brand=${brand.slug}`}
-      onMouseEnter={() => prefetchPage("/products")}
-      onFocus={() => prefetchPage("/products")}
+      to={`/brands/${brand.slug}`}
+      onMouseEnter={() => prefetchPage("/brands")}
+      onFocus={() => prefetchPage("/brands")}
       className="group flex flex-col items-center rounded-card border border-line bg-card p-5 text-center shadow-card transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover"
     >
-      <ImagePlaceholder type="brand" aspect="aspect-[3/2]" className="rounded-lg" />
+      {brand.logo ? (
+        <img
+          src={brand.logo}
+          alt={`لوگوی ${brand.name}`}
+          className="aspect-[3/2] w-full rounded-lg object-contain"
+          loading="lazy"
+        />
+      ) : (
+        <ImagePlaceholder type="brand" aspect="aspect-[3/2]" className="rounded-lg" />
+      )}
       <h3 className="mt-4 text-sm font-black text-ink transition-colors group-hover:text-brand-600">
         {brand.name}
       </h3>

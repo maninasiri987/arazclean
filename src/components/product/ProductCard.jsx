@@ -38,7 +38,18 @@ function ProductCard({ product }) {
         className="relative block"
         aria-label={product.title}
       >
-        <ImagePlaceholder type={product.placeholder || "product"} className={outOfStock ? "grayscale" : ""} />
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.title}
+            loading="lazy"
+            className={`aspect-square w-full object-contain bg-card p-4 transition-transform duration-500 group-hover:scale-[1.03] ${
+              outOfStock ? "grayscale" : ""
+            }`}
+          />
+        ) : (
+          <ImagePlaceholder type={product.placeholder || "product"} className={outOfStock ? "grayscale" : ""} />
+        )}
         {/* برچسب تخفیف */}
         {hasDiscount && (
           <Badge variant="discount" className="absolute right-3 top-3 shadow-card">

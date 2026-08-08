@@ -19,8 +19,13 @@ const SORT_OPTIONS = [
 /**
  * چیدمان کامل فهرست محصولات — برای صفحهٔ محصولات و دسته‌بندی.
  */
-export default function ProductListing({ forceCategory, perPage = 12 }) {
-  const hook = useProducts({ perPage, forceCategory });
+export default function ProductListing({
+  forceCategory,
+  forceSubcategory,
+  forceBrand,
+  perPage = 12,
+}) {
+  const hook = useProducts({ perPage, forceCategory, forceSubcategory, forceBrand });
   const { products, total, page, totalPages, params, setParam } = hook;
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -28,8 +33,13 @@ export default function ProductListing({ forceCategory, perPage = 12 }) {
     <div className="max-w-site mx-auto grid grid-cols-1 gap-6 px-4 pb-16 sm:px-6 lg:grid-cols-[280px_1fr] lg:px-8">
       {/* فیلتر — دسکتاپ */}
       <div className="hidden lg:block">
-        <div className="sticky top-36">
-          <SidebarFilter hook={hook} hideCategory={Boolean(forceCategory)} />
+        <div className="sticky top-[calc(var(--header-offset,122px)+16px)]">
+          <SidebarFilter
+            hook={hook}
+            hideCategory={Boolean(forceCategory)}
+            currentCategory={forceCategory}
+            hideBrand={Boolean(forceBrand)}
+          />
         </div>
       </div>
 
@@ -95,7 +105,12 @@ export default function ProductListing({ forceCategory, perPage = 12 }) {
         title="فیلتر محصولات"
         maxWidth="max-w-sm"
       >
-        <SidebarFilter hook={hook} hideCategory={Boolean(forceCategory)} />
+        <SidebarFilter
+          hook={hook}
+          hideCategory={Boolean(forceCategory)}
+          currentCategory={forceCategory}
+          hideBrand={Boolean(forceBrand)}
+        />
       </Modal>
     </div>
   );

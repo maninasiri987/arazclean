@@ -39,7 +39,7 @@ export default function ContactPage() {
 
       <div className="max-w-site mx-auto grid grid-cols-1 gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[380px_1fr] lg:px-8">
         {/* اطلاعات تماس */}
-        <aside className="h-fit space-y-4 lg:sticky lg:top-36">
+        <aside className="h-fit space-y-4 lg:sticky lg:top-[calc(var(--header-offset,122px)+16px)]">
           <div className="rounded-card border border-line bg-card p-6 shadow-card">
             <div className="flex size-12 items-center justify-center rounded-xl bg-brand-50">
               <Phone className="size-6 text-brand-600" aria-hidden="true" />

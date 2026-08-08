@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { SlidersHorizontal, X } from "lucide-react";
-import { getCategories, getBrands, getProducts } from "../../services/catalog.js";
+import { ChevronDown, SlidersHorizontal, X } from "lucide-react";
+import {
+  getCategories,
+  getBrands,
+  getProducts,
+  getCategoryBySlug,
+} from "../../services/catalog.js";
 import { formatNumber, toFaDigits } from "../../utils/format.js";
 
 const PRICE_PRESETS = [
@@ -23,25 +28,68 @@ function countFor(categorySlug) {
   return getProducts().filter((p) => p.categorySlug === categorySlug).length;
 }
 
+function countForSub(categorySlug, subcategorySlug) {
+  return getProducts().filter(
+    (p) =>
+      p.categorySlug === categorySlug && p.subcategorySlug === subcategorySlug
+  ).length;
+}
+
 function countForBrand(brandSlug) {
   return getProducts().filter((p) => p.brandSlug === brandSlug).length;
 }
 
 /**
- * فیلتر کناری — دسته‌ها، برندها، بازهٔ قیمت، موجودی.
+ * فیلتر کناری — دسته‌ها (با زیردسته‌ها)، برندها، بازهٔ قیمت، موجودی.
  * `useProducts` را از طریق props دریافت می‌کند.
  */
-export default function SidebarFilter({ hook, hideCategory = false }) {
-  const { params, setParam, clearAll, hasActiveFilters } = hook;
+export default function SidebarFilter({
+  hook,
+  hideCategory = false,
+  currentCategory = "",
+  hideBrand = false,
+}) {
+  const { params, setParam, setParams, clearAll, hasActiveFilters } = hook;
   const [customMin, setCustomMin] = useState("");
   const [customMax, setCustomMax] = useState("");
+  // دسته‌های بازشده در فیلتر (زیردسته‌ها)
+  const [openCats, setOpenCats] = useState(() =>
+    params.category ? new Set([params.category]) : new Set()
+  );
 
   const categories = getCategories();
   const brands = getBrands();
 
+  const toggleCat = (slug) => {
+    setOpenCats((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) next.delete(slug);
+      else next.add(slug);
+      return next;
+    });
+  };
+
+  const selectCategory = (slug) => {
+    const active = params.category === slug;
+    setParams({
+      category: active ? "" : slug,
+      subcategory: "",
+    });
+  };
+
+  const selectSubcategory = (catSlug, subSlug) => {
+    const active = params.category === catSlug && params.subcategory === subSlug;
+    setParams({
+      category: active ? "" : catSlug,
+      subcategory: active ? "" : subSlug,
+    });
+  };
+
   const applyCustomPrice = () => {
-    setParam("priceMin", customMin ? Number(customMin) : "");
-    setParam("priceMax", customMax ? Number(customMax) : "");
+    setParams({
+      priceMin: customMin ? Number(customMin) : "",
+      priceMax: customMax ? Number(customMax) : "",
+    });
     setCustomMin("");
     setCustomMax("");
   };
@@ -67,57 +115,136 @@ export default function SidebarFilter({ hook, hideCategory = false }) {
 
       {/* دسته‌بندی‌ها */}
       {!hideCategory && (
-      <FilterSection title="دسته‌بندی">
-        <ul className="space-y-1">
-          {categories.map((cat) => {
-            const active = params.category === cat.slug;
-            return (
-              <li key={cat.slug}>
-                <button
-                  type="button"
-                  onClick={() => setParam("category", active ? "" : cat.slug)}
-                  aria-pressed={active}
-                  className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors duration-200 ${
-                    active
-                      ? "bg-brand-50 font-bold text-brand-600"
-                      : "text-muted hover:bg-background hover:text-ink"
-                  }`}
-                >
-                  {cat.title}
-                  <span className="text-xs text-muted/70">{formatNumber(countFor(cat.slug))}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </FilterSection>
+        <FilterSection title="دسته‌بندی">
+          <ul className="space-y-1">
+            {categories.map((cat) => {
+              const active = params.category === cat.slug;
+              const open = openCats.has(cat.slug);
+              return (
+                <li key={cat.slug} className="space-y-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      selectCategory(cat.slug);
+                      toggleCat(cat.slug);
+                    }}
+                    aria-expanded={open}
+                    className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition-colors duration-200 ${
+                      active
+                        ? "bg-brand-50 font-bold text-brand-600"
+                        : "text-muted hover:bg-background hover:text-ink"
+                    }`}
+                  >
+                    <span className="flex min-w-0 items-center gap-1.5">
+                      {cat.subcategories?.length > 0 && (
+                        <ChevronDown
+                          aria-hidden="true"
+                          className={`size-3.5 shrink-0 transition-transform duration-200 ${
+                            open ? "rotate-180" : "-rotate-90"
+                          }`}
+                        />
+                      )}
+                      <span className="truncate">{cat.title}</span>
+                    </span>
+                    <span className="shrink-0 text-xs text-muted/70">
+                      {formatNumber(countFor(cat.slug))}
+                    </span>
+                  </button>
+
+                  {open && cat.subcategories?.length > 0 && (
+                    <ul className="ms-4 space-y-1 border-s border-line ps-2">
+                      {cat.subcategories.map((sub) => {
+                        const subActive =
+                          params.category === cat.slug &&
+                          params.subcategory === sub.slug;
+                        return (
+                          <li key={sub.slug}>
+                            <button
+                              type="button"
+                              onClick={() => selectSubcategory(cat.slug, sub.slug)}
+                              aria-pressed={subActive}
+                              className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-sm transition-colors duration-200 ${
+                                subActive
+                                  ? "bg-brand-50 font-bold text-brand-600"
+                                  : "text-muted hover:bg-background hover:text-ink"
+                              }`}
+                            >
+                              <span className="truncate">{sub.title}</span>
+                              <span className="text-xs text-muted/70">
+                                {formatNumber(countForSub(cat.slug, sub.slug))}
+                              </span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </FilterSection>
+      )}
+
+      {/* در صفحهٔ یک دسته: زیردسته‌های همان دسته */}
+      {hideCategory && currentCategory && (
+        <FilterSection title="زیردسته‌ها">
+          <ul className="space-y-1">
+            {(getCategoryBySlug(currentCategory)?.subcategories || []).map(
+              (sub) => {
+                const active = params.subcategory === sub.slug;
+                return (
+                  <li key={sub.slug}>
+                    <button
+                      type="button"
+                      onClick={() => setParam("subcategory", active ? "" : sub.slug)}
+                      aria-pressed={active}
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors duration-200 ${
+                        active
+                          ? "bg-brand-50 font-bold text-brand-600"
+                          : "text-muted hover:bg-background hover:text-ink"
+                      }`}
+                    >
+                      {sub.title}
+                      <span className="text-xs text-muted/70">
+                        {formatNumber(countForSub(currentCategory, sub.slug))}
+                      </span>
+                    </button>
+                  </li>
+                );
+              }
+            )}
+          </ul>
+        </FilterSection>
       )}
 
       {/* برندها */}
-      <FilterSection title="برند">
-        <ul className="space-y-1">
-          {brands.map((brand) => {
-            const active = params.brand === brand.slug;
-            return (
-              <li key={brand.slug}>
-                <button
-                  type="button"
-                  onClick={() => setParam("brand", active ? "" : brand.slug)}
-                  aria-pressed={active}
-                  className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors duration-200 ${
-                    active
-                      ? "bg-brand-50 font-bold text-brand-600"
-                      : "text-muted hover:bg-background hover:text-ink"
-                  }`}
-                >
-                  {brand.name}
-                  <span className="text-xs text-muted/70">{formatNumber(countForBrand(brand.slug))}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </FilterSection>
+      {!hideBrand && (
+        <FilterSection title="برند">
+          <ul className="space-y-1">
+            {brands.map((brand) => {
+              const active = params.brand === brand.slug;
+              return (
+                <li key={brand.slug}>
+                  <button
+                    type="button"
+                    onClick={() => setParam("brand", active ? "" : brand.slug)}
+                    aria-pressed={active}
+                    className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors duration-200 ${
+                      active
+                        ? "bg-brand-50 font-bold text-brand-600"
+                        : "text-muted hover:bg-background hover:text-ink"
+                    }`}
+                  >
+                    {brand.name}
+                    <span className="text-xs text-muted/70">{formatNumber(countForBrand(brand.slug))}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </FilterSection>
+      )}
 
       {/* بازهٔ قیمت */}
       <FilterSection title="بازهٔ قیمت">
@@ -132,9 +259,10 @@ export default function SidebarFilter({ hook, hideCategory = false }) {
                 key={preset.label}
                 type="button"
                 onClick={() =>
-                  active
-                    ? (setParam("priceMin", ""), setParam("priceMax", ""))
-                    : (setParam("priceMin", preset.min || ""), setParam("priceMax", preset.max === Infinity ? "" : preset.max))
+                  setParams({
+                    priceMin: active ? "" : preset.min || "",
+                    priceMax: active ? "" : preset.max === Infinity ? "" : preset.max,
+                  })
                 }
                 aria-pressed={active}
                 className={`cursor-pointer rounded-full border px-3 py-1.5 text-xs font-bold transition-colors duration-200 ${

@@ -35,6 +35,16 @@ export default function ProductDetailsPage() {
 
   if (!product) return <NotFoundPage />;
 
+  // گالری تصاویر — اگر محصول فقط یک تصویر دارد، نوار بندانگشتی نمایش داده نمی‌شود
+  const galleryImages =
+    product.images && product.images.length > 0
+      ? product.images
+      : product.image
+        ? [product.image]
+        : [];
+  const hasGallery = galleryImages.length > 1;
+  const currentImage = hasGallery ? galleryImages[activeView - 1] : galleryImages[0];
+
   const outOfStock = product.stock <= 0;
   const hasDiscount = product.discount > 0;
   const related = getRelatedProducts(product);
@@ -61,7 +71,15 @@ export default function ProductDetailsPage() {
           {/* گالری */}
           <div>
             <div className="relative overflow-hidden rounded-card border border-line bg-card shadow-card">
-              <ImagePlaceholder type={product.placeholder || "product"} aspect="aspect-square" />
+              {currentImage ? (
+                <img
+                  src={currentImage}
+                  alt={product.title}
+                  className={`aspect-square w-full object-contain bg-card p-6 ${outOfStock ? "grayscale" : ""}`}
+                />
+              ) : (
+                <ImagePlaceholder type={product.placeholder || "product"} aspect="aspect-square" />
+              )}
               {hasDiscount && (
                 <Badge variant="discount" className="absolute right-4 top-4 shadow-card">
                   {formatDiscountPercent(product.discount)} تخفیف
@@ -72,28 +90,41 @@ export default function ProductDetailsPage() {
                   ناموجود
                 </Badge>
               )}
-              <span className="absolute bottom-4 left-4 rounded-full bg-card/90 px-2.5 py-1 text-[11px] font-bold text-muted shadow-card backdrop-blur">
-                نمای {toFaDigits(activeView)}
-              </span>
+              {hasGallery && (
+                <span className="absolute bottom-4 left-4 rounded-full bg-card/90 px-2.5 py-1 text-[11px] font-bold text-muted shadow-card backdrop-blur">
+                  نمای {toFaDigits(activeView)}
+                </span>
+              )}
             </div>
-            <div className="mt-3 grid grid-cols-4 gap-3" role="group" aria-label="تصاویر محصول">
-              {[1, 2, 3, 4].map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => setActiveView(n)}
-                  aria-label={`نمای ${toFaDigits(n)}`}
-                  aria-pressed={activeView === n}
-                  className={`cursor-pointer overflow-hidden rounded-lg border-2 transition-all duration-200 ${
-                    activeView === n
-                      ? "border-brand-500 ring-2 ring-brand-500/20"
-                      : "border-line hover:border-brand-500/50"
-                  }`}
-                >
-                  <ImagePlaceholder type="product" aspect="aspect-square" />
-                </button>
-              ))}
-            </div>
+
+            {/* نوار بندانگشتی — فقط وقتی محصول چند تصویر دارد */}
+            {hasGallery && (
+              <div className="mt-3 grid grid-cols-4 gap-3" role="group" aria-label="تصاویر محصول">
+                {galleryImages.map((src, i) => {
+                  const n = i + 1;
+                  return (
+                    <button
+                      key={src}
+                      type="button"
+                      onClick={() => setActiveView(n)}
+                      aria-label={`نمای ${toFaDigits(n)}`}
+                      aria-pressed={activeView === n}
+                      className={`cursor-pointer overflow-hidden rounded-lg border-2 transition-all duration-200 ${
+                        activeView === n
+                          ? "border-brand-500 ring-2 ring-brand-500/20"
+                          : "border-line hover:border-brand-500/50"
+                      }`}
+                    >
+                      <img
+                        src={src}
+                        alt={`${product.title} — نمای ${toFaDigits(n)}`}
+                        className="aspect-square w-full object-contain bg-card p-2"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* اطلاعات */}

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Header from "./components/layout/Header.jsx";
 import Footer from "./components/layout/Footer.jsx";
+import BottomNav from "./components/layout/BottomNav.jsx";
 import BackToTop from "./components/layout/BackToTop.jsx";
 import BootLoader from "./components/common/BootLoader.jsx";
 import useScrollRestoration from "./hooks/useScrollRestoration.js";
@@ -12,11 +13,11 @@ import {
   CategoryPage,
   ProductDetailsPage,
   BrandsPage,
-  BlogPage,
-  BlogDetailsPage,
+  BrandPage,
   AboutPage,
   ContactPage,
   CartPage,
+  AdminNewProductPage,
   NotFoundPage,
 } from "./routes.js";
 
@@ -57,18 +58,22 @@ export default function App() {
 
       <Header />
 
-      <main id="main" className="min-h-screen bg-background pt-[118px] lg:pt-[122px]">
+      <main
+        id="main"
+        className="min-h-screen bg-background pt-[68px] lg:pt-[var(--header-offset,122px)] lg:transition-[padding-top] lg:duration-500 lg:ease-[cubic-bezier(0.16,1,0.3,1)]"
+      >
         {/* fallback خالی — هنگام جابه‌جایی بین صفحات لودر نمایش داده نمی‌شود */}
         <Suspense fallback={null}>
           <MarkBooted onBoot={setBooted} />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/category/:slug/:subslug" element={<CategoryPage />} />
             <Route path="/category/:slug" element={<CategoryPage />} />
             <Route path="/product/:slug" element={<ProductDetailsPage />} />
+            <Route path="/brands/:slug" element={<BrandPage />} />
             <Route path="/brands" element={<BrandsPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogDetailsPage />} />
+            <Route path="/admin/products/new" element={<AdminNewProductPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/cart" element={<CartPage />} />
@@ -78,6 +83,11 @@ export default function App() {
       </main>
 
       <Footer />
+
+      {/* فضای خالی موبایل — تا فوتر زیر نوار پایین پنهان نشود */}
+      <div className="h-16 lg:hidden" aria-hidden="true" />
+      <BottomNav />
+
       <BackToTop />
     </>
   );

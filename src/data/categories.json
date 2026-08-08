@@ -1,66 +1,140 @@
 [
   {
-    "slug": "dishwashing",
-    "title": "ظرف‌شویی",
-    "description": "مایع ظرف‌شویی، قرص ماشین ظرف‌شویی و اسکاچ‌های باکیفیت برای شست‌وشوی روزانه",
-    "icon": "dish",
-    "placeholder": "category",
-    "featured": true
-  },
-  {
     "slug": "laundry",
-    "title": "لباس‌شویی",
+    "title": "شوینده‌های لباس",
     "description": "پودر، مایع و نرم‌کنندهٔ لباس با رایحه‌های ماندگار و قدرت پاک‌کنندگی بالا",
     "icon": "laundry",
     "placeholder": "category",
-    "featured": true
+    "featured": true,
+    "subcategories": [
+      { "slug": "laundry-powder", "title": "پودر لباسشویی" },
+      { "slug": "laundry-liquid", "title": "مایع لباسشویی" },
+      { "slug": "fabric-softener", "title": "نرم‌کننده لباس" },
+      { "slug": "stain-remover", "title": "لکه‌بر" },
+      { "slug": "fabric-bleach", "title": "سفیدکننده لباس" }
+    ]
   },
   {
-    "slug": "disinfectant",
-    "title": "ضدعفونی و گندزدایی",
-    "description": "محصولات ضدعفونی‌کنندهٔ سطوح، دست و محیط برای سلامت خانواده",
-    "icon": "shield",
+    "slug": "dishwashing",
+    "title": "شوینده‌های ظروف",
+    "description": "مایع ظرف‌شویی، قرص ماشین ظرف‌شویی و اسکاچ‌های باکیفیت برای شست‌وشوی روزانه",
+    "icon": "dish",
     "placeholder": "category",
-    "featured": true
+    "featured": true,
+    "subcategories": [
+      { "slug": "dishwashing-liquid", "title": "مایع ظرفشویی" },
+      { "slug": "dishwasher-tablets", "title": "قرص ماشین ظرفشویی" },
+      { "slug": "dishwasher-gel", "title": "ژل ماشین ظرفشویی" },
+      { "slug": "dishwasher-salt", "title": "نمک ماشین ظرفشویی" },
+      { "slug": "rinsing-agent", "title": "جلادهنده" },
+      { "slug": "scourers-sponges", "title": "اسکاج و اسفنج" }
+    ]
   },
   {
-    "slug": "glass-surfaces",
-    "title": "شیشه و سطوح",
-    "description": "شیشه‌پاک‌کن‌ها و محلول‌های چندمنظوره برای سطوح براق و بدون لک",
+    "slug": "home-cleaning",
+    "title": "شوینده و نظافت منزل",
+    "description": "چندمنظوره، شیشه‌شوی، چربی‌زدا و جرم‌گیر برای نظافت همهٔ سطوح خانه",
     "icon": "sparkles",
     "placeholder": "category",
-    "featured": true
+    "featured": true,
+    "subcategories": [
+      { "slug": "multi-purpose", "title": "چندمنظوره" },
+      { "slug": "glass-cleaner", "title": "شیشه‌شوی" },
+      { "slug": "surface-cleaner", "title": "پاک‌کننده سطوح" },
+      { "slug": "degreaser", "title": "چربی‌زدا" },
+      { "slug": "descaler", "title": "جرم‌گیر" },
+      { "slug": "bleach", "title": "سفیدکننده" },
+      { "slug": "toilet-cleaner", "title": "شوینده سرویس بهداشتی" }
+    ]
   },
   {
-    "slug": "towels-cloths",
-    "title": "دستمال و حوله",
-    "description": "دستمال میکروفایبر، تی و دستمال کاغذی نرم و پرجذب",
+    "slug": "personal-care",
+    "title": "بهداشت شخصی",
+    "description": "شامپو، صابون، خمیردندان و محصولات مراقبت شخصی برای شادابی روزانه",
+    "icon": "droplets",
+    "placeholder": "category",
+    "featured": true,
+    "subcategories": [
+      { "slug": "shampoo", "title": "شامپو" },
+      { "slug": "soap", "title": "صابون" },
+      { "slug": "hand-wash", "title": "مایع دستشویی" },
+      { "slug": "toothpaste", "title": "خمیردندان" },
+      { "slug": "toothbrush", "title": "مسواک" },
+      { "slug": "deodorant", "title": "دئودورانت" },
+      { "slug": "body-care", "title": "محصولات مراقبت از بدن" }
+    ]
+  },
+  {
+    "slug": "baby-care",
+    "title": "کودک و نوزاد",
+    "description": "پوشک، دستمال مرطوب و شوینده‌های مخصوص پوست حساس کودک",
+    "icon": "baby",
+    "placeholder": "category",
+    "featured": true,
+    "subcategories": [
+      { "slug": "diapers", "title": "پوشک" },
+      { "slug": "baby-wet-wipes", "title": "دستمال مرطوب" },
+      { "slug": "baby-shampoo", "title": "شامپو کودک" },
+      { "slug": "baby-soap", "title": "صابون کودک" },
+      { "slug": "baby-laundry", "title": "شوینده لباس کودک" }
+    ]
+  },
+  {
+    "slug": "tissue",
+    "title": "محصولات سلولزی",
+    "description": "دستمال کاغذی، دستمال توالت و دستمال حوله‌ای نرم و پرجذب",
     "icon": "layers",
     "placeholder": "category",
-    "featured": true
-  },
-  {
-    "slug": "air-freshener",
-    "title": "خوشبوکننده",
-    "description": "خوشبوکنندهٔ محیط، ماشین و شمع‌های معطر برای فضایی دل‌نشین",
-    "icon": "wind",
-    "placeholder": "category",
-    "featured": false
+    "featured": false,
+    "subcategories": [
+      { "slug": "facial-tissues", "title": "دستمال کاغذی" },
+      { "slug": "toilet-paper", "title": "دستمال توالت" },
+      { "slug": "kitchen-towels", "title": "دستمال حوله‌ای" },
+      { "slug": "wet-wipes", "title": "دستمال مرطوب" }
+    ]
   },
   {
     "slug": "cleaning-tools",
-    "title": "ادوات نظافت",
-    "description": "اسکاچ، برس، سطل و ابزارهای حرفه‌ای نظافت منزل و محل کار",
+    "title": "لوازم نظافت",
+    "description": "دستکش، اسکاچ، تی، جارو و سایر ابزارهای حرفه‌ای نظافت",
     "icon": "brush",
     "placeholder": "category",
-    "featured": false
+    "featured": false,
+    "subcategories": [
+      { "slug": "gloves", "title": "دستکش" },
+      { "slug": "scourers", "title": "اسکاچ و سیم ظرفشویی" },
+      { "slug": "mops", "title": "تی و زمین‌شوی" },
+      { "slug": "brooms-dustpans", "title": "جارو و خاک‌انداز" },
+      { "slug": "sponges", "title": "ابر و اسفنج" },
+      { "slug": "garbage-bags", "title": "کیسه زباله" }
+    ]
   },
   {
-    "slug": "industrial",
-    "title": "شوینده صنعتی",
-    "description": "محصولات پرقدرت برای هتل‌ها، رستوران‌ها، بیمارستان‌ها و مراکز صنعتی",
-    "icon": "factory",
+    "slug": "disinfectants",
+    "title": "ضدعفونی و بهداشت",
+    "description": "محصولات ضدعفونی‌کنندهٔ دست و سطوح برای سلامت خانواده",
+    "icon": "shield",
     "placeholder": "category",
-    "featured": false
+    "featured": true,
+    "subcategories": [
+      { "slug": "hand-disinfectant", "title": "ضدعفونی‌کننده دست" },
+      { "slug": "surface-disinfectant", "title": "ضدعفونی‌کننده سطوح" },
+      { "slug": "alcohol", "title": "الکل" },
+      { "slug": "sanitizer-gel", "title": "ژل ضدعفونی‌کننده" }
+    ]
+  },
+  {
+    "slug": "special",
+    "title": "ویژه",
+    "description": "پرفروش‌ترین‌ها، محصولات جدید و تخفیف‌های استثنایی آراز کلین",
+    "icon": "star",
+    "placeholder": "category",
+    "featured": false,
+    "subcategories": [
+      { "slug": "best-sellers", "title": "پرفروش‌ترین‌ها" },
+      { "slug": "new-products", "title": "محصولات جدید" },
+      { "slug": "discounts", "title": "تخفیف‌ها" },
+      { "slug": "special-offers", "title": "پیشنهاد ویژه" }
+    ]
   }
 ]

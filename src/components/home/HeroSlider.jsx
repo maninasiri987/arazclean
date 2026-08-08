@@ -46,7 +46,7 @@ export default function HeroSlider() {
           <SwiperSlide key={slide.id}>
             {/* تصویر پس‌زمینهٔ اسلاید — یک لایهٔ واحد، بدون المان‌های اضافه */}
             <div
-              className="relative flex aspect-[16/6] w-full items-center overflow-hidden sm:h-[240px] sm:aspect-auto lg:h-[300px] xl:h-[340px]"
+              className="relative flex h-[180px] w-full items-center overflow-hidden sm:h-[400px]"
               style={{
                 background: slide.image,
                 backgroundSize: "cover",

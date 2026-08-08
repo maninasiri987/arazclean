@@ -4,7 +4,6 @@
     { "label": "محصولات", "to": "/products", "match": "/products" },
     { "label": "دسته‌بندی‌ها", "to": "/products", "match": "categories" },
     { "label": "برندها", "to": "/brands", "match": "/brands" },
-    { "label": "مجله", "to": "/blog", "match": "/blog" },
     { "label": "درباره ما", "to": "/about", "match": "/about" },
     { "label": "تماس با ما", "to": "/contact", "match": "/contact" }
   ],
@@ -15,8 +14,7 @@
         { "label": "صفحه اصلی", "to": "/" },
         { "label": "همهٔ محصولات", "to": "/products" },
         { "label": "دسته‌بندی‌ها", "to": "/products" },
-        { "label": "برندها", "to": "/brands" },
-        { "label": "مجله آراز کلین", "to": "/blog" }
+        { "label": "برندها", "to": "/brands" }
       ]
     },
     {
@@ -29,13 +27,5 @@
         { "label": "حریم خصوصی", "to": "/about" }
       ]
     }
-  ],
-  "popularSearches": [
-    "مایع ظرف‌شویی",
-    "شیشه‌پاک‌کن",
-    "ضدعفونی‌کننده",
-    "دستمال میکروفایبر",
-    "خوشبوکننده هوا",
-    "پودر لباسشویی"
   ]
 }

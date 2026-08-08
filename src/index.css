@@ -95,84 +95,6 @@ textarea {
   background-color: var(--color-brand-100, #ccecec);
 }
 
-/* ---------- انیمیشن‌های کشویی جستجو ---------- */
-
-/* ورود پنجرهٔ جستجو — با کمی مقیاس و نرمی فنری */
-@keyframes dropdown-in {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.search-dropdown-in {
-  animation: dropdown-in 0.26s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: top center;
-}
-
-/* خروج پنجرهٔ جستجو */
-@keyframes dropdown-out {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-8px) scale(0.97);
-  }
-}
-
-.search-dropdown-out {
-  animation: dropdown-out 0.18s ease-in forwards;
-}
-
-/* پس‌زمینهٔ تیره */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.fade-in {
-  animation: fade-in 0.22s ease-out;
-}
-
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.fade-out {
-  animation: fade-out 0.18s ease-in forwards;
-}
-
-/* ورود پلکانی آیتم‌های جستجو */
-@keyframes chip-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.search-chip {
-  animation: chip-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
 /* ---------- لودر اولیهٔ سایت — طراحی ساده: اسپینر کلاسیک ---------- */
 .boot-screen {
   position: fixed;
@@ -245,12 +167,7 @@ textarea {
 
 /* احترام به تنظیم کاهش حرکت کاربر */
 @media (prefers-reduced-motion: reduce) {
-  .boot-spinner,
-  .search-dropdown-in,
-  .search-dropdown-out,
-  .fade-in,
-  .fade-out,
-  .search-chip {
+  .boot-spinner {
     animation: none;
   }
 }
