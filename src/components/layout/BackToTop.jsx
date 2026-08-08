@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 export default function BackToTop() {
@@ -21,20 +20,16 @@ export default function BackToTop() {
   }, []);
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.button
-          type="button"
-          aria-label="بازگشت به بالا"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 16 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-24 right-6 z-40 flex size-11 cursor-pointer items-center justify-center rounded-full bg-brand-500 text-white shadow-pop transition-colors hover:bg-brand-600 focus-visible:ring-4 focus-visible:ring-brand-500/20 lg:bottom-6"
-        >
-          <ArrowUp className="size-5" aria-hidden="true" />
-        </motion.button>
-      )}
-    </AnimatePresence>
+    visible && (
+      <button
+        type="button"
+        aria-label="بازگشت به بالا"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        style={{ animation: "fade-in 0.25s ease-out both" }}
+        className="fixed bottom-24 right-6 z-40 flex size-11 cursor-pointer items-center justify-center rounded-full bg-brand-500 text-white shadow-pop transition-colors hover:bg-brand-600 focus-visible:ring-4 focus-visible:ring-brand-500/20 lg:bottom-6"
+      >
+        <ArrowUp className="size-5" aria-hidden="true" />
+      </button>
+    )
   );
 }

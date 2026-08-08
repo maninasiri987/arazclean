@@ -1,7 +1,7 @@
 import { getCategories } from "../../services/catalog.js";
 import SectionTitle from "../ui/SectionTitle.jsx";
 import CategoryCard from "./CategoryCard.jsx";
-import Reveal from "../common/Reveal.jsx";
+import Reveal from "../../components/common/Reveal.jsx";
 
 export default function CategoryRow() {
   const categories = getCategories();
@@ -14,7 +14,8 @@ export default function CategoryRow() {
         linkTo="/products"
       />
       <Reveal>
-        <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
+        {/* یک ردیف — اسکرول افقی بدون نمایش اسکرول‌بار */}
+        <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:gap-4 sm:px-6 lg:-mx-8 lg:px-8">
           {categories.map((category) => (
             <CategoryCard key={category.slug} category={category} />
           ))}

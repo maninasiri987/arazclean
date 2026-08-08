@@ -2,9 +2,11 @@ import { useState } from "react";
 import { ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import {
   getCategories,
-  getBrands,
-  getProducts,
+  getBrandsWithCounts,
   getCategoryBySlug,
+  getCategoryProductCount,
+  getSubcategoryProductCount,
+  getProductCountByBrand,
 } from "../../services/catalog.js";
 import { formatNumber, toFaDigits } from "../../utils/format.js";
 
@@ -24,24 +26,8 @@ function FilterSection({ title, children }) {
   );
 }
 
-function countFor(categorySlug) {
-  return getProducts().filter((p) => p.categorySlug === categorySlug).length;
-}
-
-function countForSub(categorySlug, subcategorySlug) {
-  return getProducts().filter(
-    (p) =>
-      p.categorySlug === categorySlug && p.subcategorySlug === subcategorySlug
-  ).length;
-}
-
-function countForBrand(brandSlug) {
-  return getProducts().filter((p) => p.brandSlug === brandSlug).length;
-}
-
 /**
- * فیلتر کناری — دسته‌ها (با زیردسته‌ها)، برندها، بازهٔ قیمت، موجودی.
- * `useProducts` را از طریق props دریافت می‌کند.
+ * Filter uses pre-computed counts from catalog service — zero filter() calls.
  */
 export default function SidebarFilter({
   hook,
@@ -52,13 +38,11 @@ export default function SidebarFilter({
   const { params, setParam, setParams, clearAll, hasActiveFilters } = hook;
   const [customMin, setCustomMin] = useState("");
   const [customMax, setCustomMax] = useState("");
-  // دسته‌های بازشده در فیلتر (زیردسته‌ها)
   const [openCats, setOpenCats] = useState(() =>
     params.category ? new Set([params.category]) : new Set()
   );
-
   const categories = getCategories();
-  const brands = getBrands();
+  const brands = getBrandsWithCounts();
 
   const toggleCat = (slug) => {
     setOpenCats((prev) => {
@@ -147,7 +131,7 @@ export default function SidebarFilter({
                       <span className="truncate">{cat.title}</span>
                     </span>
                     <span className="shrink-0 text-xs text-muted/70">
-                      {formatNumber(countFor(cat.slug))}
+                      {formatNumber(getCategoryProductCount(cat.slug))}
                     </span>
                   </button>
 
@@ -171,7 +155,7 @@ export default function SidebarFilter({
                             >
                               <span className="truncate">{sub.title}</span>
                               <span className="text-xs text-muted/70">
-                                {formatNumber(countForSub(cat.slug, sub.slug))}
+                                {formatNumber(getSubcategoryProductCount(cat.slug, sub.slug))}
                               </span>
                             </button>
                           </li>
@@ -207,7 +191,7 @@ export default function SidebarFilter({
                     >
                       {sub.title}
                       <span className="text-xs text-muted/70">
-                        {formatNumber(countForSub(currentCategory, sub.slug))}
+                        {formatNumber(getSubcategoryProductCount(currentCategory, sub.slug))}
                       </span>
                     </button>
                   </li>
@@ -237,7 +221,7 @@ export default function SidebarFilter({
                     }`}
                   >
                     {brand.name}
-                    <span className="text-xs text-muted/70">{formatNumber(countForBrand(brand.slug))}</span>
+                    <span className="text-xs text-muted/70">{formatNumber(getProductCountByBrand(brand.slug))}</span>
                   </button>
                 </li>
               );

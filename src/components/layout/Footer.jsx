@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Instagram, Mail, Phone, Send, MessageCircle, Linkedin, Sparkles } from "lucide-react";
 import { getNavigation, getSettings } from "../../services/catalog.js";
 import { toEnDigits } from "../../utils/format.js";
-import logo from "../../../assets/header.png";
+import logo from "../../../assets/header.webp";
 
 const socialIcons = {
   instagram: Instagram,
@@ -33,7 +33,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex items-center" aria-label={siteName}>
               <span className="rounded-xl bg-white px-3 py-2 shadow-card">
-                <img src={logo} alt={siteName} className="h-9 w-auto object-contain" />
+                <img src={logo} alt={siteName} className="h-9 w-auto object-contain" loading="lazy" decoding="async" />
               </span>
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-7 text-white/70">{description}</p>

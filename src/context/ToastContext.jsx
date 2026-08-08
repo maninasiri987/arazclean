@@ -1,6 +1,5 @@
 import { createContext, useCallback, useContext, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Info, X } from "lucide-react";
 
 const ToastContext = createContext(null);
@@ -10,9 +9,6 @@ const icons = {
   info: Info,
 };
 
-/**
- * نمایش توست — showToast(message, type='success')
- */
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const idRef = useRef(0);
@@ -38,35 +34,38 @@ export function ToastProvider({ children }) {
             aria-live="polite"
             role="status"
           >
-            <AnimatePresence>
-              {toasts.map((toast) => {
-                const Icon = icons[toast.type] || Info;
-                return (
-                  <motion.div
-                    key={toast.id}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    transition={{ duration: 0.22 }}
-                    className="pointer-events-auto flex w-full items-center gap-3 rounded-xl bg-ink px-4 py-3 text-white shadow-pop"
+            {toasts.map((toast) => {
+              const Icon = icons[toast.type] || Info;
+              return (
+                <div
+                  key={toast.id}
+                  className="pointer-events-auto flex w-full items-center gap-3 rounded-xl bg-ink px-4 py-3 text-white shadow-pop transition-all duration-200"
+                  style={{
+                    animation: "toast-in 0.22s ease-out both",
+                  }}
+                >
+                  <Icon className="size-5 shrink-0 text-success-500" aria-hidden="true" />
+                  <p className="flex-1 text-sm font-medium">{toast.message}</p>
+                  <button
+                    type="button"
+                    onClick={() => dismiss(toast.id)}
+                    aria-label="بستن اعلان"
+                    className="flex cursor-pointer items-center rounded-md p-1 text-white/60 transition-colors hover:text-white"
                   >
-                    <Icon className="size-5 shrink-0 text-success-500" aria-hidden="true" />
-                    <p className="flex-1 text-sm font-medium">{toast.message}</p>
-                    <button
-                      type="button"
-                      onClick={() => dismiss(toast.id)}
-                      aria-label="بستن اعلان"
-                      className="flex cursor-pointer items-center rounded-md p-1 text-white/60 transition-colors hover:text-white"
-                    >
-                      <X className="size-4" aria-hidden="true" />
-                    </button>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+                    <X className="size-4" aria-hidden="true" />
+                  </button>
+                </div>
+              );
+            })}
           </div>,
           document.body
         )}
+      <style>{`
+        @keyframes toast-in {
+          from { opacity: 0; transform: translateY(20px) scale(0.95); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
     </ToastContext.Provider>
   );
 }

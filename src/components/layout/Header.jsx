@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LogIn, ShoppingCart } from "lucide-react";
 import { useCartState } from "../../context/CartContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 import { formatNumber } from "../../utils/format.js";
 import Search from "./Search.jsx";
 import Navbar from "./Navbar.jsx";
-import logo from "../../../assets/header.png";
+import ProfileMenu from "./ProfileMenu.jsx";
+import logo from "../../../assets/header.webp";
 import { getSettings } from "../../services/catalog.js";
 
 /**
@@ -19,6 +21,7 @@ import { getSettings } from "../../services/catalog.js";
  */
 export default function Header() {
   const { count } = useCartState();
+  const { user } = useAuth();
   const [navHidden, setNavHidden] = useState(false);
 
   // جمع‌شدن ردیف دوم هنگام اسکرول به پایین
@@ -58,20 +61,24 @@ export default function Header() {
         <div className="hidden lg:block">
           <div className="flex h-20 items-center gap-6 px-4 sm:gap-8 sm:px-6 lg:px-10">
             <Link to="/" className="flex shrink-0 items-center" aria-label={getSettings().siteName}>
-              <img src={logo} alt={getSettings().siteName} className="h-11 w-auto object-contain" />
+              <img src={logo} alt={getSettings().siteName} className="h-11 w-auto object-contain" loading="lazy" decoding="async" />
             </Link>
 
             <Search className="w-full max-w-md" />
 
             <div className="ms-auto flex shrink-0 items-center gap-2">
-              <button
-                type="button"
-                aria-label="ورود یا ثبت‌نام"
-                className="group flex cursor-pointer items-center gap-2 rounded-xl border border-brand-500 bg-transparent px-4 py-2.5 text-sm font-bold text-brand-600 transition-[color,background-color,transform] hover:bg-brand-500 hover:text-white active:scale-95"
-              >
-                <LogIn className="size-4 -scale-x-100" aria-hidden="true" />
-                ورود / ثبت‌نام
-              </button>
+              {user ? (
+                <ProfileMenu />
+              ) : (
+                <Link
+                  to="/login"
+                  aria-label="ورود یا ثبت‌نام"
+                  className="group flex cursor-pointer items-center gap-2 rounded-xl border border-brand-500 bg-transparent px-4 py-2.5 text-sm font-bold text-brand-600 transition-[color,background-color,transform] hover:bg-brand-500 hover:text-white active:scale-95"
+                >
+                  <LogIn className="size-4 -scale-x-100" aria-hidden="true" />
+                  ورود / ثبت‌نام
+                </Link>
+              )}
               <Link
                 to="/cart"
                 aria-label={`سبد خرید — ${formatNumber(count)} کالا`}
@@ -108,17 +115,23 @@ export default function Header() {
                     alt=""
                     aria-hidden="true"
                     className="h-7 w-auto object-contain"
+                    loading="lazy"
+                    decoding="async"
                   />
                 }
               />
             </div>
-            <button
-              type="button"
-              aria-label="ورود یا ثبت‌نام"
-              className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-line text-muted transition-[color,background-color,border-color] duration-200 hover:border-brand-500 hover:bg-brand-50 hover:text-brand-600"
-            >
-              <LogIn className="size-4.5 -scale-x-100" aria-hidden="true" />
-            </button>
+            {user ? (
+              <ProfileMenu />
+            ) : (
+              <Link
+                to="/login"
+                aria-label="ورود یا ثبت‌نام"
+                className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-line text-muted transition-[color,background-color,border-color] duration-200 hover:border-brand-500 hover:bg-brand-50 hover:text-brand-600"
+              >
+                <LogIn className="size-4.5 -scale-x-100" aria-hidden="true" />
+              </Link>
+            )}
           </div>
         </div>
       </header>

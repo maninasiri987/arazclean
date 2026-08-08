@@ -14,6 +14,7 @@ import SectionTitle from "../components/ui/SectionTitle.jsx";
 import NotFoundPage from "./NotFoundPage.jsx";
 import { getProductBySlug, getRelatedProducts } from "../services/catalog.js";
 import { formatPrice, formatDiscountPercent, toFaDigits } from "../utils/format.js";
+import { assetPath } from "../utils/assets.js";
 import { useCartActions } from "../context/CartContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 
@@ -36,11 +37,12 @@ export default function ProductDetailsPage() {
   if (!product) return <NotFoundPage />;
 
   // گالری تصاویر — اگر محصول فقط یک تصویر دارد، نوار بندانگشتی نمایش داده نمی‌شود
+  // مسیر تصاویر با assetPath پایه‌دار می‌شود تا در GitHub Pages درست کار کند
   const galleryImages =
     product.images && product.images.length > 0
-      ? product.images
+      ? product.images.map(assetPath)
       : product.image
-        ? [product.image]
+        ? [assetPath(product.image)]
         : [];
   const hasGallery = galleryImages.length > 1;
   const currentImage = hasGallery ? galleryImages[activeView - 1] : galleryImages[0];
@@ -76,6 +78,8 @@ export default function ProductDetailsPage() {
                   src={currentImage}
                   alt={product.title}
                   className={`aspect-square w-full object-contain bg-card p-6 ${outOfStock ? "grayscale" : ""}`}
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <ImagePlaceholder type={product.placeholder || "product"} aspect="aspect-square" />
@@ -119,6 +123,8 @@ export default function ProductDetailsPage() {
                         src={src}
                         alt={`${product.title} — نمای ${toFaDigits(n)}`}
                         className="aspect-square w-full object-contain bg-card p-2"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </button>
                   );

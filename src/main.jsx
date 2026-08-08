@@ -1,25 +1,31 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { MotionConfig } from "framer-motion";
 import App from "./App.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { ToastProvider } from "./context/ToastContext.jsx";
+import { StoreProvider } from "./context/StoreContext.jsx";
+import { AdminThemeProvider } from "./context/AdminThemeContext.jsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <HelmetProvider>
-      <MotionConfig reducedMotion="user">
-        <ToastProvider>
+      <ToastProvider>
+        <AuthProvider>
           <CartProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
+            <StoreProvider>
+              <HashRouter>
+                <AdminThemeProvider>
+                  <App />
+                </AdminThemeProvider>
+              </HashRouter>
+            </StoreProvider>
           </CartProvider>
-        </ToastProvider>
-      </MotionConfig>
+        </AuthProvider>
+      </ToastProvider>
     </HelmetProvider>
   </StrictMode>
 );

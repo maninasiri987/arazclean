@@ -5,6 +5,7 @@ import ImagePlaceholder from "../ui/ImagePlaceholder.jsx";
 import Rating from "../ui/Rating.jsx";
 import Badge from "../ui/Badge.jsx";
 import { formatPrice, formatDiscountPercent } from "../../utils/format.js";
+import { assetPath } from "../../utils/assets.js";
 import { useCartActions } from "../../context/CartContext.jsx";
 import { useToast } from "../../context/ToastContext.jsx";
 import { prefetchPage } from "../../utils/prefetch.js";
@@ -40,10 +41,10 @@ function ProductCard({ product }) {
       >
         {product.image ? (
           <img
-            src={product.image}
+            src={assetPath(product.image)}
             alt={product.title}
             loading="lazy"
-            className={`aspect-square w-full object-contain bg-card p-4 transition-transform duration-500 group-hover:scale-[1.03] ${
+            className={`aspect-square w-full object-contain bg-card p-4 ${
               outOfStock ? "grayscale" : ""
             }`}
           />

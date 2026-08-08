@@ -3,6 +3,8 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
+  // GitHub Pages — سایت در زیرمسیر /arazclean/ سرو می‌شود
+  base: "/arazclean/",
   plugins: [react(), tailwindcss()],
   build: {
     rollupOptions: {
@@ -15,8 +17,6 @@ export default defineConfig({
             "react-router-dom",
             "react-helmet-async",
           ],
-          motion: ["framer-motion"],
-          swiper: ["swiper", "swiper/react", "swiper/modules"],
           forms: ["react-hook-form"],
         },
       },

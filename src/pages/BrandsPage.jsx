@@ -3,14 +3,14 @@ import PageHero from "../components/common/PageHero.jsx";
 import BrandCard from "../components/home/BrandCard.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
 import Reveal from "../components/common/Reveal.jsx";
-import { getBrands } from "../services/catalog.js";
+import { getBrandsWithCounts } from "../services/catalog.js";
 
 /**
  * صفحهٔ برندها — به‌صورت پویا از دادهٔ محصولات ساخته می‌شود
  * (فقط برندهای یکتا که محصول دارند).
  */
 export default function BrandsPage() {
-  const brands = getBrands();
+  const brands = getBrandsWithCounts();
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function BrandsPage() {
           />
         ) : (
           <Reveal>
-            <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-5">
+            <div className="flex flex-wrap items-start justify-center gap-x-6 gap-y-10 sm:gap-x-10">
               {brands.map((brand) => (
                 <BrandCard key={brand.slug} brand={brand} />
               ))}

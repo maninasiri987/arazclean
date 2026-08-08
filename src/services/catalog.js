@@ -1,14 +1,93 @@
-import productsData from "../data/products.json";
-import categoriesData from "../data/categories.json";
-import brandsData from "../data/brands.json";
-import heroData from "../data/hero.json";
-import navigationData from "../data/navigation.json";
-import settingsData from "../data/settings.json";
+import productsSeed from "../data/products.json";
+import categoriesSeed from "../data/categories.json";
+import brandsSeed from "../data/brands.json";
+import heroSeed from "../data/hero.json";
+import navigationSeed from "../data/navigation.json";
+import settingsSeed from "../data/settings.json";
 
 /**
  * لایهٔ دسترسی به داده — تنها نقطه‌ای که با داده در ارتباط است.
  * در آینده برای اتصال به ووکامرس، فقط توابع همین فایل بازنویسی می‌شوند.
+ *
+ * داده‌ها متغیر درون ماژول هستند تا پنل مدیریت (AdminStore) بتواند
+ * آن‌ها را به‌روزرسانی کند و همهٔ کامپوننت‌ها خودکار تغییرات را ببینند.
  */
+
+// ---------- state داخلی (پیش‌فرض از فایل‌های JSON) ----------
+let productsData = [...productsSeed];
+let categoriesData = [...categoriesSeed];
+let brandsData = [...brandsSeed];
+let heroData = [...heroSeed];
+let navigationData = { ...navigationSeed };
+let settingsData = { ...settingsSeed };
+
+/**
+ * همگام‌سازی داده از پنل مدیریت — بعد از تغییر، همهٔ صداهای بعدی
+ * (محصولات، شمارنده‌ها، اسلایدر و…) مقدارهای جدید را برمی‌گردانند.
+ */
+export const setCatalogData = ({ products, brands, hero, settings } = {}) => {
+  if (products) productsData = [...products];
+  if (brands) brandsData = [...brands];
+  if (hero) heroData = [...hero];
+  if (settings) settingsData = { ...settings };
+};
+
+// ---------- Product counts (هر بار شمرده می‌شوند — حجم داده کوچک است) ----------
+const countBy = (list) => {
+  const m = {};
+  list.forEach((p) => {
+    m[p.categorySlug] = (m[p.categorySlug] || 0) + 1;
+    if (p.subcategorySlug)
+      m[`${p.categorySlug}/${p.subcategorySlug}`] =
+        (m[`${p.categorySlug}/${p.subcategorySlug}`] || 0) + 1;
+    m[`brand:${p.brandSlug}`] = (m[`brand:${p.brandSlug}`] || 0) + 1;
+  });
+  return m;
+};
+
+export const getCategoriesWithCounts = () => {
+  const counts = countBy(productsData);
+  return categoriesData.map((cat) => ({
+    ...cat,
+    productCount: counts[cat.slug] || 0,
+    subcategoryCounts: cat.subcategories?.map((sub) => ({
+      ...sub,
+      productCount: counts[`${cat.slug}/${sub.slug}`] || 0,
+    })),
+  }));
+};
+
+export const getBrandsWithCounts = () => {
+  const counts = countBy(productsData);
+  const seen = new Map();
+  productsData.forEach((p) => {
+    if (!seen.has(p.brandSlug)) {
+      seen.set(p.brandSlug, { slug: p.brandSlug, name: p.brand });
+    }
+  });
+  return Array.from(seen.values()).map((brand) => {
+    const meta = brandsData.find((b) => b.slug === brand.slug) || {};
+    return {
+      ...meta,
+      ...brand,
+      productCount: counts[`brand:${brand.slug}`] || 0,
+    };
+  });
+};
+
+export const getProductCountByBrand = (slug) => {
+  const counts = countBy(productsData);
+  return counts[`brand:${slug}`] || 0;
+};
+export const getCategoryProductCount = (slug) => {
+  const counts = countBy(productsData);
+  return counts[slug] || 0;
+};
+export const getSubcategoryProductCount = (catSlug, subSlug) => {
+  const counts = countBy(productsData);
+  return counts[`${catSlug}/${subSlug}`] || 0;
+};
+export const getTotalProductCount = () => productsData.length;
 
 // ---------- Products ----------
 export const getProducts = () => productsData;
@@ -50,15 +129,10 @@ export const getProductsByBrand = (brandSlug) =>
 
 // ---------- Categories ----------
 export const getCategories = () => categoriesData;
-
 export const getCategoryBySlug = (slug) =>
   categoriesData.find((c) => c.slug === slug) || null;
 
-// ---------- Brands (پویا — از دادهٔ محصولات استخراج می‌شوند) ----------
-/**
- * برندهای یکتا که محصول دارند — با ادغام متادیتای برند (توضیح، لوگو و…).
- * اگر برندی در `brands.json` باشد اما محصولی نداشته باشد، نمایش داده نمی‌شود.
- */
+// ---------- Brands ----------
 export const getBrands = () => {
   const seen = new Map();
   productsData.forEach((p) => {
@@ -73,12 +147,13 @@ export const getBrands = () => {
 };
 
 export const getBrandBySlug = (slug) =>
-  getBrands().find((b) => b.slug === slug) || null;
+  brandsData.find((b) => b.slug === slug) ||
+  getProducts().find((p) => p.brandSlug === slug) ||
+  null;
 
 // ---------- Hero ----------
 export const getHeroSlides = () => heroData;
 
 // ---------- Navigation & settings ----------
 export const getNavigation = () => navigationData;
-
 export const getSettings = () => settingsData;

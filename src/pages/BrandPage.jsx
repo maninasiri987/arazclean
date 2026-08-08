@@ -3,7 +3,7 @@ import Seo from "../components/common/Seo.jsx";
 import PageHero from "../components/common/PageHero.jsx";
 import ProductListing from "../components/product/ProductListing.jsx";
 import NotFoundPage from "./NotFoundPage.jsx";
-import { getBrandBySlug, getProductsByBrand } from "../services/catalog.js";
+import { getBrandBySlug, getProductCountByBrand } from "../services/catalog.js";
 import { formatNumber } from "../utils/format.js";
 
 /**
@@ -15,7 +15,7 @@ export default function BrandPage() {
 
   if (!brand) return <NotFoundPage />;
 
-  const count = getProductsByBrand(slug).length;
+  const count = getProductCountByBrand(slug);
 
   return (
     <>

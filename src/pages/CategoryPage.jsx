@@ -5,15 +5,11 @@ import ProductListing from "../components/product/ProductListing.jsx";
 import NotFoundPage from "./NotFoundPage.jsx";
 import {
   getCategoryBySlug,
-  getProductsByCategory,
-  getProductsBySubcategory,
+  getCategoryProductCount,
+  getSubcategoryProductCount,
 } from "../services/catalog.js";
 import { formatNumber } from "../utils/format.js";
 
-/**
- * صفحهٔ دسته‌بندی — از دادهٔ JSON به‌صورت پویا ساخته می‌شود.
- * از مسیر `/category/:slug` و `/category/:slug/:subslug` پشتیبانی می‌کند.
- */
 export default function CategoryPage() {
   const { slug, subslug } = useParams();
   const category = getCategoryBySlug(slug);
@@ -25,8 +21,8 @@ export default function CategoryPage() {
   if (subslug && !subcategory) return <NotFoundPage />;
 
   const count = subcategory
-    ? getProductsBySubcategory(category.slug, subcategory.slug).length
-    : getProductsByCategory(category.slug).length;
+    ? getSubcategoryProductCount(category.slug, subcategory.slug)
+    : getCategoryProductCount(category.slug);
 
   const title = subcategory ? subcategory.title : category.title;
   const subtitle = category.description;
@@ -59,7 +55,7 @@ export default function CategoryPage() {
           )}
           {category.subcategories?.map((sub) => {
             const active = subcategory?.slug === sub.slug;
-            const subCount = getProductsBySubcategory(category.slug, sub.slug).length;
+            const subCount = getSubcategoryProductCount(category.slug, sub.slug);
             if (subCount === 0) return null;
             return (
               <Link

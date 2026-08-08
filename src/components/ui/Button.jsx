@@ -29,6 +29,7 @@ export default function Button({
   size = "md",
   to,
   fullWidth,
+  icon,
   className = "",
   children,
   ...props
@@ -41,16 +42,23 @@ export default function Button({
     className,
   ].join(" ");
 
+  const content = (
+    <>
+      {icon}
+      {children}
+    </>
+  );
+
   if (to) {
     return (
       <Link to={to} className={classes} {...props}>
-        {children}
+        {content}
       </Link>
     );
   }
   return (
     <button type="button" className={classes} {...props}>
-      {children}
+      {content}
     </button>
   );
 }

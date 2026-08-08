@@ -64,6 +64,45 @@
   --container-site: 80rem;
 }
 
+/* ============================================================
+   پوستهٔ تاریک پنل مدیریت (فقط در مسیرهای /admin)
+   کلاس `dark` فقط وقتی در پنل مدیریت هستیم روی <html> قرار می‌گیرد
+   (در App.jsx مدیریت می‌شود)؛ به همین دلیل فروشگاه همیشه روشن می‌ماند.
+
+   چون یوتیلیتی‌های Tailwind به متغیرهای --color-* ارجاع می‌دهند،
+   بازتعریف این متغیرها همهٔ اجزای ادمین را یکجا تاریک می‌کند
+   بدون اینکه لازم باشد کلاس dark: به تک‌تک کامپوننت‌ها اضافه شود.
+   ============================================================ */
+.dark {
+  color-scheme: dark;
+
+  /* پس‌زمینه و سطوح */
+  --color-background: #0f172a;
+  --color-card: #1e293b;
+  --color-line: #334155;
+
+  /* متن */
+  --color-ink: #f1f5f9;
+  --color-muted: #94a3b8;
+
+  /* برند */
+  --color-brand-50: #123a3a;
+  --color-brand-100: #1a4f4e;
+  --color-brand-600: #14b8a6;
+  --color-brand-700: #2dd4bf;
+
+  /* رنگ‌های کمکی — نسخهٔ تیره برای خوانایی روی پس‌زمینهٔ تیره */
+  --color-trust-50: #172a56;
+  --color-trust-600: #60a5fa;
+  --color-success-50: #0c2b1d;
+  --color-success-600: #4ade80;
+  --color-red-50: #3b1220;
+  --color-red-500: #f87171;
+  --color-amber-50: #3a2c0d;
+  --color-amber-500: #fbbf24;
+  --color-amber-600: #fbbf24;
+}
+
 /* فوکوس قابل‌مشاهده برای همه‌جا — دسترس‌پذیری.
    (بدون تغییر border-radius؛ حلقهٔ فوکوس خودکار هم‌شکل با گردی همان المان است) */
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
@@ -81,6 +120,8 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: var(--color-background);
   color: var(--color-ink);
+  /* انتقال نرم هنگام تعویض تم روشن/تاریک پنل مدیریت */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* فرم‌ها هم از همان فونت استفاده کنند */
@@ -133,35 +174,63 @@ textarea {
   contain-intrinsic-size: auto 700px;
 }
 
-/* ---------- اسلایدر هیرو — رنگ بولت‌های صفحه‌بندی روی پس‌زمینهٔ تیره ---------- */
-.hero-swiper .swiper-pagination {
-  bottom: 1.25rem !important;
+/* ---------- انیمیشن‌های ورود (جایگزین framer-motion؛ بدون وابستگی خارجی) ---------- */
+
+/* کشوها و منوهای بازشونده */
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.hero-swiper .swiper-pagination-bullet {
-  background: rgb(255 255 255 / 0.55);
-  opacity: 1;
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  transition: background-color 0.25s ease;
+/* محو ساده */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.hero-swiper .swiper-pagination-bullet-active {
-  background: #ffffff;
-  width: 8px;
-  height: 8px;
+/* ورود مودال‌ها */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.hero-swiper .swiper-pagination-bullet:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px;
+/* ---------- اسکرول افقی بدون نمایش اسکرول‌بار ---------- */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge قدیمی */
 }
 
-/* موبایل: دکمه‌های قبلی/بعدی و نقاط صفحه‌بندی نمایش داده نمی‌شوند */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}
+
+/* ---------- موبایل: حذف حلقهٔ فوکوس مستطیلی فیلد جستجوی هدر ----------
+   حلقهٔ سراسری `:focus-visible` روی این input (که داخل قرص گرد است)
+   به‌صورت مستطیل بی‌گوشه نمایش داده می‌شد؛ فقط در موبایل غیرفعال می‌شود.
+   خودِ قرص همچنان با focus-within حالت فوکوس گرد و نرم دارد. */
 @media (max-width: 640px) {
-  .hero-swiper .swiper-pagination {
-    display: none;
+  .search-mobile input,
+  .search-mobile input:focus,
+  .search-mobile input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

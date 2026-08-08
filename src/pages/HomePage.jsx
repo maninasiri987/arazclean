@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Seo from "../components/common/Seo.jsx";
 import Reveal from "../components/common/Reveal.jsx";
 import HeroSlider from "../components/home/HeroSlider.jsx";
@@ -11,8 +12,11 @@ import ProductGrid from "../components/product/ProductGrid.jsx";
 import { getFeaturedProducts, getNewProducts } from "../services/catalog.js";
 
 export default function HomePage() {
-  const featured = getFeaturedProducts(8);
-  const fresh = getNewProducts(8);
+  // memoize filtered lists so they don't re-calculate on every render
+  const { featured, fresh } = useMemo(
+    () => ({ featured: getFeaturedProducts(8), fresh: getNewProducts(8) }),
+    []
+  );
 
   return (
     <>
@@ -22,9 +26,9 @@ export default function HomePage() {
 
       <div className="space-y-14 pb-16 pt-4 sm:space-y-20 sm:pt-6">
         <HeroSlider />
-        <ValuePropsStrip />
 
-        <CategoryRow />
+        {/* برندهای معتبر — بالای پرفروش‌ترین‌ها */}
+        <BrandLogoGrid />
 
         <section aria-labelledby="featured-title" className="cv-section max-w-site mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
@@ -37,6 +41,9 @@ export default function HomePage() {
             <ProductGrid products={featured} />
           </Reveal>
         </section>
+
+        {/* دسته‌بندی محصولات — پایین پرفروش‌ترین‌ها */}
+        <CategoryRow />
 
         <PromoBanner />
 
@@ -52,7 +59,9 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <BrandLogoGrid />
+        {/* مزایای خرید — بالای خبرنامه در پایین صفحه (ابتدای فوتر) */}
+        <ValuePropsStrip />
+
         <Newsletter />
       </div>
     </>

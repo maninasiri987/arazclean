@@ -1,12 +1,12 @@
-import { Suspense, useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { Suspense, useEffect, useLayoutEffect, useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/layout/Header.jsx";
 import Footer from "./components/layout/Footer.jsx";
 import BottomNav from "./components/layout/BottomNav.jsx";
 import BackToTop from "./components/layout/BackToTop.jsx";
 import BootLoader from "./components/common/BootLoader.jsx";
 import useScrollRestoration from "./hooks/useScrollRestoration.js";
+import { useAdminTheme } from "./context/AdminThemeContext.jsx";
 import {
   HomePage,
   ProductsPage,
@@ -16,8 +16,14 @@ import {
   BrandPage,
   AboutPage,
   ContactPage,
+  AuthPage,
   CartPage,
-  AdminNewProductPage,
+  AdminLayout,
+  AdminDashboard,
+  AdminProductList,
+  AdminProductForm,
+  AdminSliders,
+  AdminBrands,
   NotFoundPage,
 } from "./routes.js";
 
@@ -40,6 +46,19 @@ function MarkBooted({ onBoot }) {
 
 export default function App() {
   const [booted, setBooted] = useState(false);
+  const { pathname } = useLocation();
+  const { theme } = useAdminTheme();
+  const isAdmin = pathname.startsWith("/admin");
+
+  // کلاس dark فقط در پنل مدیریت روی <html> قرار می‌گیرد؛
+  // هنگام بازگشت به فروشگاه بلافاصله برداشته می‌شود تا فروشگاه همیشه روشن بماند.
+  // useLayoutEffect: قبل از paint اجرا می‌شود تا فلش روشن/تاریک دیده نشود.
+  useLayoutEffect(() => {
+    document.documentElement.classList.toggle(
+      "dark",
+      isAdmin && theme === "dark"
+    );
+  }, [isAdmin, theme]);
 
   return (
     <>
@@ -54,13 +73,17 @@ export default function App() {
       <ScrollToTop />
 
       {/* لودر فقط هنگام اولین باز شدن سایت */}
-      <AnimatePresence>{!booted && <BootLoader />}</AnimatePresence>
+      {!booted && <BootLoader />}
 
-      <Header />
+      {!isAdmin && <Header />}
 
       <main
         id="main"
-        className="min-h-screen bg-background pt-[68px] lg:pt-[var(--header-offset,122px)] lg:transition-[padding-top] lg:duration-500 lg:ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className={`min-h-screen bg-background ${
+          isAdmin
+            ? ""
+            : "pt-[68px] lg:pt-[var(--header-offset,122px)] lg:transition-[padding-top] lg:duration-500 lg:ease-[cubic-bezier(0.16,1,0.3,1)]"
+        }`}
       >
         {/* fallback خالی — هنگام جابه‌جایی بین صفحات لودر نمایش داده نمی‌شود */}
         <Suspense fallback={null}>
@@ -73,22 +96,34 @@ export default function App() {
             <Route path="/product/:slug" element={<ProductDetailsPage />} />
             <Route path="/brands/:slug" element={<BrandPage />} />
             <Route path="/brands" element={<BrandsPage />} />
-            <Route path="/admin/products/new" element={<AdminNewProductPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/login" element={<AuthPage mode="login" />} />
+            <Route path="/register" element={<AuthPage mode="register" />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="products" element={<AdminProductList />} />
+              <Route path="products/new" element={<AdminProductForm />} />
+              <Route path="products/:id" element={<AdminProductForm />} />
+              <Route path="sliders" element={<AdminSliders />} />
+              <Route path="brands" element={<AdminBrands />} />
+            </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </main>
 
-      <Footer />
+      {!isAdmin && (
+        <>
+          <Footer />
+          {/* فضای خالی موبایل — تا فوتر زیر نوار پایین پنهان نشود */}
+          <div className="h-16 lg:hidden" aria-hidden="true" />
+          <BottomNav />
+        </>
+      )}
 
-      {/* فضای خالی موبایل — تا فوتر زیر نوار پایین پنهان نشود */}
-      <div className="h-16 lg:hidden" aria-hidden="true" />
-      <BottomNav />
-
-      <BackToTop />
+      {!isAdmin && <BackToTop />}
     </>
   );
 }

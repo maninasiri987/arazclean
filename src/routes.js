@@ -14,8 +14,16 @@ export const routeLoaders = {
   "/brands": () => import("./pages/BrandsPage.jsx"),
   "/about": () => import("./pages/AboutPage.jsx"),
   "/contact": () => import("./pages/ContactPage.jsx"),
+  "/login": () => import("./pages/AuthPage.jsx"),
+  "/register": () => import("./pages/AuthPage.jsx"),
   "/cart": () => import("./pages/CartPage.jsx"),
-  "/admin/products/new": () => import("./pages/AdminNewProductPage.jsx"),
+  "/admin": () => import("./pages/admin/AdminLayout.jsx"),
+  "/admin/dashboard": () => import("./pages/admin/AdminDashboard.jsx"),
+  "/admin/products": () => import("./pages/admin/AdminProductList.jsx"),
+  "/admin/products/:id": () => import("./pages/admin/AdminProductForm.jsx"),
+  "/admin/products/new": () => import("./pages/admin/AdminProductForm.jsx"),
+  "/admin/sliders": () => import("./pages/admin/AdminSliders.jsx"),
+  "/admin/brands": () => import("./pages/admin/AdminBrands.jsx"),
 };
 
 export const HomePage = lazy(routeLoaders["/"]);
@@ -26,6 +34,12 @@ export const BrandsPage = lazy(routeLoaders["/brands"]);
 export const BrandPage = lazy(routeLoaders["/brands/:slug"]);
 export const AboutPage = lazy(routeLoaders["/about"]);
 export const ContactPage = lazy(routeLoaders["/contact"]);
+export const AuthPage = lazy(routeLoaders["/login"]);
 export const CartPage = lazy(routeLoaders["/cart"]);
-export const AdminNewProductPage = lazy(routeLoaders["/admin/products/new"]);
+export const AdminLayout = lazy(routeLoaders["/admin"]);
+export const AdminDashboard = lazy(routeLoaders["/admin/dashboard"]);
+export const AdminProductList = lazy(routeLoaders["/admin/products"]);
+export const AdminProductForm = lazy(routeLoaders["/admin/products/:id"]);
+export const AdminSliders = lazy(routeLoaders["/admin/sliders"]);
+export const AdminBrands = lazy(routeLoaders["/admin/brands"]);
 export const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));

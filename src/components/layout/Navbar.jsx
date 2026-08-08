@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronLeft, LayoutGrid, Package } from "lucide-react";
 import {
   getNavigation,
   getCategories,
-  getProducts,
-  getProductsByCategory,
-  getProductsBySubcategory,
+  getCategoryProductCount,
+  getSubcategoryProductCount,
+  getTotalProductCount,
 } from "../../services/catalog.js";
 import { prefetchPage } from "../../utils/prefetch.js";
 import { formatNumber } from "../../utils/format.js";
@@ -85,9 +84,19 @@ export default function Navbar({ onNavigate }) {
     closeTimerRef.current = setTimeout(() => setMenuOpen(false), 150);
   };
 
+  // بستن منو هنگام خروج فوکوس (کیبورد) — مثل جستجو: با تأخیر کوتاه تا
+  // انتقال فوکوس بین آیتم‌های داخل منو منو را نبندد
+  const handleBlurMenu = () => {
+    closeTimerRef.current = setTimeout(() => {
+      if (menuRef.current && !menuRef.current.contains(document.activeElement)) {
+        setMenuOpen(false);
+      }
+    }, 120);
+  };
+
   const activeCat =
     categories.find((c) => c.slug === activeCatSlug) || categories[0];
-  const totalProducts = getProducts().length;
+  const totalProducts = getTotalProductCount();
 
   return (
     <nav aria-label="ناوبری اصلی">
@@ -104,6 +113,8 @@ export default function Navbar({ onNavigate }) {
                 className="relative"
                 onMouseEnter={openMenu}
                 onMouseLeave={closeMenu}
+                onFocus={openMenu}
+                onBlur={handleBlurMenu}
               >
                 <Link
                   to={item.to}
@@ -134,15 +145,14 @@ export default function Navbar({ onNavigate }) {
                 </Link>
 
                 {/* منوی کشویی تمام‌عرض — از هدر بیرون می‌زند (fixed) */}
-                <AnimatePresence>
-                  {menuOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                      className="fixed inset-x-0 top-[var(--header-offset,122px)] z-[60] border-b border-line bg-card shadow-pop"
-                    >
+                {menuOpen && (
+                  <div
+                    className="fixed inset-x-0 top-[var(--header-offset,122px)] z-[60] border-b border-line bg-card shadow-pop"
+                    style={{
+                      animation: "dropdown-in 0.2s cubic-bezier(0.16,1,0.3,1) both",
+                      transformOrigin: "top center",
+                    }}
+                  >
                       <div className="max-w-site mx-auto px-4 py-6 sm:px-6 lg:px-10">
                         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[290px_1fr]">
                           {/* ---------- ستون ۱: لیست دسته‌ها ---------- */}
@@ -157,7 +167,7 @@ export default function Navbar({ onNavigate }) {
                             <ul className="space-y-1">
                               {categories.map((cat) => {
                                 const isActiveCat = cat.slug === activeCat?.slug;
-                                const count = getProductsByCategory(cat.slug).length;
+                                const count = getCategoryProductCount(cat.slug);
                                 return (
                                   <li key={cat.slug}>
                                     <Link
@@ -210,14 +220,12 @@ export default function Navbar({ onNavigate }) {
 
                           {/* ---------- ستون ۲: پنل دستهٔ فعال ---------- */}
                           <div className="border-s border-line ps-8">
-                            <AnimatePresence mode="wait" initial={false}>
-                              <motion.div
-                                key={activeCat?.slug}
-                                initial={{ opacity: 0, x: 16 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -10 }}
-                                transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                              >
+                            <div
+                              key={activeCat?.slug}
+                              style={{
+                                animation: "fade-in 0.2s ease-out both",
+                              }}
+                            >
                                 <header className="flex flex-wrap items-start justify-between gap-3">
                                   <div className="flex items-center gap-3">
                                     <span
@@ -249,10 +257,10 @@ export default function Navbar({ onNavigate }) {
 
                                 <div className="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-3">
                                   {activeCat?.subcategories?.map((sub) => {
-                                    const subCount = getProductsBySubcategory(
+                                    const subCount = getSubcategoryProductCount(
                                       activeCat.slug,
                                       sub.slug
-                                    ).length;
+                                    );
                                     return (
                                       <Link
                                         key={sub.slug}
@@ -276,8 +284,7 @@ export default function Navbar({ onNavigate }) {
                                     );
                                   })}
                                 </div>
-                              </motion.div>
-                            </AnimatePresence>
+                              </div>
                           </div>
                         </div>
                       </div>
@@ -312,9 +319,8 @@ export default function Navbar({ onNavigate }) {
                           </div>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   )}
-                </AnimatePresence>
               </li>
             );
           }

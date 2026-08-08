@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 import { Clock, Search as SearchIcon, X } from "lucide-react";
 import useRecentSearches from "../../hooks/useRecentSearches.js";
 
@@ -91,14 +90,13 @@ export default function Search({ className = "", logo }) {
     // فقط هنگام فوکوس و در صورت وجود جستجوی اخیر
     if (!desktopOpen || !recent.length) return null;
     return (
-      <motion.div
+      <div
         key="desktop-search-dropdown"
-        initial={{ opacity: 0, y: -8, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: -8, scale: 0.98 }}
-        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        style={{ transformOrigin: "top center" }}
         className="absolute inset-x-0 top-full z-[70] mt-2 overflow-hidden rounded-2xl border border-line bg-card shadow-pop"
+        style={{
+          animation: "dropdown-in 0.2s cubic-bezier(0.16,1,0.3,1) both",
+          transformOrigin: "top center",
+        }}
       >
         <div className="p-2">
           <div className="mb-1 flex items-center justify-between px-3 pt-1">
@@ -140,7 +138,7 @@ export default function Search({ className = "", logo }) {
             ))}
           </ul>
         </div>
-      </motion.div>
+      </div>
     );
   };
 
@@ -152,7 +150,7 @@ export default function Search({ className = "", logo }) {
         <form
           role="search"
           onSubmit={handleSubmit}
-          className={`relative ${className}`}
+          className={`search-mobile relative ${className}`}
         >
           <div className="flex h-11 items-center gap-1.5 rounded-full border border-line bg-background ps-3 pe-1.5 transition-[border-color,background-color,box-shadow] duration-200 focus-within:border-brand-500 focus-within:bg-card focus-within:shadow-soft">
             {/* آیکون جستجو — سمت راست (شروع در RTL) */}
@@ -167,7 +165,7 @@ export default function Search({ className = "", logo }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 aria-label="جستجو در محصولات"
-                className="w-full bg-transparent py-2 text-sm text-ink focus:outline-none"
+                className="w-full bg-transparent py-2 text-sm text-ink focus:outline-none focus-visible:outline-none focus-visible:shadow-none"
               />
               {/* placeholder سفارشی: «جستجو در» + لوگو در سمت چپِ متن — فقط وقتی خالی است */}
               {!query.trim() && (
@@ -227,9 +225,7 @@ export default function Search({ className = "", logo }) {
           </form>
 
           {/* کشوی جستجوهای اخیر — فقط دسکتاپ */}
-          <div className="hidden lg:block">
-            <AnimatePresence>{renderDesktopDropdown()}</AnimatePresence>
-          </div>
+          <div className="hidden lg:block">{renderDesktopDropdown()}</div>
         </div>
       )}
     </>
