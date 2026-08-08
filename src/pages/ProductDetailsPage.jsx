@@ -4,6 +4,7 @@ import { CheckCircle2, ShoppingCart, Truck } from "lucide-react";
 import Seo from "../components/common/Seo.jsx";
 import Breadcrumb from "../components/ui/Breadcrumb.jsx";
 import ImagePlaceholder from "../components/ui/ImagePlaceholder.jsx";
+import SmartImage from "../components/ui/SmartImage.jsx";
 import Badge from "../components/ui/Badge.jsx";
 import Rating from "../components/ui/Rating.jsx";
 import Button from "../components/ui/Button.jsx";
@@ -14,7 +15,6 @@ import SectionTitle from "../components/ui/SectionTitle.jsx";
 import NotFoundPage from "./NotFoundPage.jsx";
 import { getProductBySlug, getRelatedProducts } from "../services/catalog.js";
 import { formatPrice, formatDiscountPercent, toFaDigits } from "../utils/format.js";
-import { assetPath } from "../utils/assets.js";
 import { useCartActions } from "../context/CartContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 
@@ -37,12 +37,12 @@ export default function ProductDetailsPage() {
   if (!product) return <NotFoundPage />;
 
   // گالری تصاویر — اگر محصول فقط یک تصویر دارد، نوار بندانگشتی نمایش داده نمی‌شود
-  // مسیر تصاویر با assetPath پایه‌دار می‌شود تا در GitHub Pages درست کار کند
+  // مسیر پایه‌دار شدن تصاویر داخل SmartImage انجام می‌شود (assetPath)
   const galleryImages =
     product.images && product.images.length > 0
-      ? product.images.map(assetPath)
+      ? product.images
       : product.image
-        ? [assetPath(product.image)]
+        ? [product.image]
         : [];
   const hasGallery = galleryImages.length > 1;
   const currentImage = hasGallery ? galleryImages[activeView - 1] : galleryImages[0];
@@ -74,12 +74,11 @@ export default function ProductDetailsPage() {
           <div>
             <div className="relative overflow-hidden rounded-card border border-line bg-card shadow-card">
               {currentImage ? (
-                <img
+                <SmartImage
                   src={currentImage}
                   alt={product.title}
-                  className={`aspect-square w-full object-contain bg-card p-6 ${outOfStock ? "grayscale" : ""}`}
-                  loading="lazy"
-                  decoding="async"
+                  className={`aspect-square bg-card ${outOfStock ? "grayscale" : ""}`}
+                  imgClassName="h-full w-full object-contain p-6"
                 />
               ) : (
                 <ImagePlaceholder type={product.placeholder || "product"} aspect="aspect-square" />
@@ -119,12 +118,11 @@ export default function ProductDetailsPage() {
                           : "border-line hover:border-brand-500/50"
                       }`}
                     >
-                      <img
+                      <SmartImage
                         src={src}
                         alt={`${product.title} — نمای ${toFaDigits(n)}`}
-                        className="aspect-square w-full object-contain bg-card p-2"
-                        loading="lazy"
-                        decoding="async"
+                        className="aspect-square bg-card"
+                        imgClassName="h-full w-full object-contain p-2"
                       />
                     </button>
                   );

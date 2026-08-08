@@ -4,7 +4,7 @@ import { Sparkles } from "lucide-react";
 import { getProductCountByBrand } from "../../services/catalog.js";
 import { formatNumber } from "../../utils/format.js";
 import { prefetchPage } from "../../utils/prefetch.js";
-import { assetPath } from "../../utils/assets.js";
+import SmartImage from "../ui/SmartImage.jsx";
 
 /**
  * کارت برند — لوگوی دایره‌ای + نام + تعداد محصولات.
@@ -22,14 +22,13 @@ function BrandCard({ brand }) {
       className="group flex flex-col items-center gap-3"
       aria-label={`برند ${brand.name} — ${formatNumber(count)} محصول`}
     >
-      <span className="flex size-20 items-center justify-center rounded-full border border-line bg-card p-2.5 shadow-card transition-[border-color,box-shadow] duration-300 group-hover:border-brand-500 group-hover:shadow-card-hover sm:size-24">
+      <span className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-line bg-card p-2.5 shadow-card transition-[border-color,box-shadow] duration-300 group-hover:border-brand-500 group-hover:shadow-card-hover sm:size-24">
         {brand.logo ? (
-          <img
-            src={assetPath(brand.logo)}
+          <SmartImage
+            src={brand.logo}
             alt={`لوگوی ${brand.name}`}
-            className="h-full w-full object-contain"
-            loading="lazy"
-            decoding="async"
+            className="h-full w-full"
+            imgClassName="h-full w-full object-contain"
           />
         ) : (
           <span className="flex h-full w-full items-center justify-center rounded-full bg-brand-50 text-brand-500">

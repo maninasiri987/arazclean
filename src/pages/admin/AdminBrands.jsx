@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Edit3, Plus, Sparkles, Trash2 } from "lucide-react";
 import { useStore } from "../../context/StoreContext.jsx";
 import { toFaDigits } from "../../utils/format.js";
-import { assetPath } from "../../utils/assets.js";
+import SmartImage from "../../components/ui/SmartImage.jsx";
 import Button from "../../components/ui/Button.jsx";
 import Input from "../../components/ui/Input.jsx";
 import Modal from "../../components/ui/Modal.jsx";
@@ -99,12 +99,11 @@ export default function AdminBrands() {
           >
             <div className="flex items-center gap-3">
               {brand.logo ? (
-                <img
-                  src={assetPath(brand.logo)}
+                <SmartImage
+                  src={brand.logo}
                   alt={brand.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-line bg-background object-cover"
+                  className="size-12 shrink-0 rounded-xl border border-line bg-background"
+                  imgClassName="h-full w-full object-cover"
                 />
               ) : (
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-lg font-black text-brand-700">

@@ -2,10 +2,10 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { PackageX, ShoppingCart } from "lucide-react";
 import ImagePlaceholder from "../ui/ImagePlaceholder.jsx";
+import SmartImage from "../ui/SmartImage.jsx";
 import Rating from "../ui/Rating.jsx";
 import Badge from "../ui/Badge.jsx";
 import { formatPrice, formatDiscountPercent } from "../../utils/format.js";
-import { assetPath } from "../../utils/assets.js";
 import { useCartActions } from "../../context/CartContext.jsx";
 import { useToast } from "../../context/ToastContext.jsx";
 import { prefetchPage } from "../../utils/prefetch.js";
@@ -40,13 +40,11 @@ function ProductCard({ product }) {
         aria-label={product.title}
       >
         {product.image ? (
-          <img
-            src={assetPath(product.image)}
+          <SmartImage
+            src={product.image}
             alt={product.title}
-            loading="lazy"
-            className={`aspect-square w-full object-contain bg-card p-4 ${
-              outOfStock ? "grayscale" : ""
-            }`}
+            className={`aspect-square bg-card ${outOfStock ? "grayscale" : ""}`}
+            imgClassName="h-full w-full object-contain p-4"
           />
         ) : (
           <ImagePlaceholder type={product.placeholder || "product"} className={outOfStock ? "grayscale" : ""} />

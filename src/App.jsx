@@ -5,6 +5,7 @@ import Footer from "./components/layout/Footer.jsx";
 import BottomNav from "./components/layout/BottomNav.jsx";
 import BackToTop from "./components/layout/BackToTop.jsx";
 import BootLoader from "./components/common/BootLoader.jsx";
+import RouteFallback from "./components/common/RouteFallback.jsx";
 import useScrollRestoration from "./hooks/useScrollRestoration.js";
 import { useAdminTheme } from "./context/AdminThemeContext.jsx";
 import {
@@ -85,8 +86,8 @@ export default function App() {
             : "pt-[68px] lg:pt-[var(--header-offset,122px)] lg:transition-[padding-top] lg:duration-500 lg:ease-[cubic-bezier(0.16,1,0.3,1)]"
         }`}
       >
-        {/* fallback خالی — هنگام جابه‌جایی بین صفحات لودر نمایش داده نمی‌شود */}
-        <Suspense fallback={null}>
+        {/* هنگام جابه‌جایی بین صفحات lazy، اسکلت متناسب با مسیر نمایش داده می‌شود */}
+        <Suspense fallback={<RouteFallback />}>
           <MarkBooted onBoot={setBooted} />
           <Routes>
             <Route path="/" element={<HomePage />} />

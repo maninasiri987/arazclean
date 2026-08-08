@@ -1,4 +1,4 @@
-const base = "animate-pulse rounded-xl bg-line/60";
+const base = "skeleton-shimmer rounded-xl";
 
 /**
  * اسکلت بارگذاری — variants: card, list, hero, text

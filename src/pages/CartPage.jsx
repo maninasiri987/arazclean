@@ -5,11 +5,11 @@ import Breadcrumb from "../components/ui/Breadcrumb.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
 import Button from "../components/ui/Button.jsx";
 import ImagePlaceholder from "../components/ui/ImagePlaceholder.jsx";
+import SmartImage from "../components/ui/SmartImage.jsx";
 import QuantitySelector from "../components/product/QuantitySelector.jsx";
 import { useCartState, useCartActions } from "../context/CartContext.jsx";
 import { getProductById } from "../services/catalog.js";
 import { formatPrice, toFaDigits } from "../utils/format.js";
-import { assetPath } from "../utils/assets.js";
 
 export default function CartPage() {
   const { items, count, subtotal } = useCartState();
@@ -57,11 +57,11 @@ export default function CartPage() {
                       aria-label={product.title}
                     >
                       {product.image ? (
-                        <img
-                          src={assetPath(product.image)}
+                        <SmartImage
+                          src={product.image}
                           alt={product.title}
-                          loading="lazy"
-                          className="aspect-square w-full object-contain bg-card p-1.5"
+                          className="aspect-square bg-card"
+                          imgClassName="h-full w-full object-contain p-1.5"
                         />
                       ) : (
                         <ImagePlaceholder type="product" aspect="aspect-square" />

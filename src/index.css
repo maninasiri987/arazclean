@@ -210,6 +210,34 @@ textarea {
   }
 }
 
+/* ---------- اسکلت بارگذاری با درخشش ملایم ----------
+   از متغیرهای پوسته استفاده می‌کند تا در هر دو تم روشن و تاریک درست دیده شود. */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-line) 0%,
+    var(--color-card) 50%,
+    var(--color-line) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none;
+  }
+}
+
 /* ---------- اسکرول افقی بدون نمایش اسکرول‌بار ---------- */
 .no-scrollbar {
   scrollbar-width: none; /* Firefox */
