@@ -12,9 +12,24 @@ import {
   getHeroSlides,
   setCatalogData,
 } from "../services/catalog.js";
+import productsSeed from "../data/products.json";
+import brandsSeed from "../data/brands.json";
 
-// نسخهٔ ۲ — بعد از حذف محصولات بدون تصویر؛ تا دادهٔ کش‌شدهٔ قدیمی روی نسخهٔ جدید ننشیند
-const STORAGE_KEY = "arazclean-admin-store-v2";
+/**
+ * اثرانگشت سادهٔ دادهٔ نمونه — اگر محصولات/برندها در JSON تغییر کنند،
+ * کلید کش عوض می‌شود و دادهٔ قدیمی localStorage دیگر روی دادهٔ جدید
+ * نمی‌نشیند (دیگر نیازی به شماره‌گذاری دستی نسخه نیست).
+ */
+const fingerprint = (data) => {
+  let h = 0;
+  const str = JSON.stringify(data);
+  for (let i = 0; i < str.length; i++) {
+    h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h).toString(36);
+};
+
+const STORAGE_KEY = `arazclean-admin-store-${fingerprint(productsSeed)}-${fingerprint(brandsSeed)}`;
 
 /**
  * مخزن دادهٔ پنل مدیریت — منبع واحد محصولات/برندها/اسلایدرها.
