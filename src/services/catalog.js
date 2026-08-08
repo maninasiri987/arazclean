@@ -151,6 +151,9 @@ export const getBrandBySlug = (slug) =>
   getProducts().find((p) => p.brandSlug === slug) ||
   null;
 
+/** همهٔ برندهای تعریف‌شده (از برندهای.json) — برای سلکت فرم محصول در پنل مدیریت */
+export const getAllBrands = () => brandsData;
+
 // ---------- Hero ----------
 export const getHeroSlides = () => heroData;
 

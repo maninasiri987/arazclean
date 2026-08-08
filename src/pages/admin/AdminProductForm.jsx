@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FileText, ImagePlus, Package, Save, Tags } from "lucide-react";
 import { useStore } from "../../context/StoreContext.jsx";
-import { getCategories } from "../../services/catalog.js";
+import { getCategories, getAllBrands } from "../../services/catalog.js";
 import Input from "../../components/ui/Input.jsx";
 import Button from "../../components/ui/Button.jsx";
 
@@ -24,6 +24,17 @@ export default function AdminProductForm() {
     () => (isEdit ? products.find((p) => p.id === Number(id)) : null),
     [id, isEdit, products]
   );
+
+  // همهٔ برندها: برندهای ثبت‌شده در فروشگاه + همهٔ برندهای تعریف‌شده در برندهای.json
+  // تا در فرم بتوان هر برندی را بدون نیاز به داشتن محصول قبلی انتخاب کرد.
+  const brandOptions = useMemo(() => {
+    const map = new Map();
+    brands.forEach((b) => map.set(b.slug, b));
+    getAllBrands().forEach((b) => {
+      if (!map.has(b.slug)) map.set(b.slug, b);
+    });
+    return Array.from(map.values());
+  }, [brands]);
 
   const [form, setForm] = useState(() => ({
     title: "",
@@ -51,9 +62,9 @@ export default function AdminProductForm() {
       setForm({
         title: existing.title,
         slug: existing.slug,
-        // سلکت برند مقدار slug می‌گیرد؛ برای پیش‌انتخاب درست باید اسلاگ باشد
+        // سلکت‌ها مقدار slug می‌گیرند؛ برای پیش‌انتخاب درست باید اسلاگ باشند
         brand: existing.brandSlug || existing.brand,
-        subcategory: existing.subcategory,
+        subcategory: existing.subcategorySlug || existing.subcategory,
         description: existing.description,
         price: String(existing.price),
         oldPrice: existing.oldPrice ? String(existing.oldPrice) : "",
@@ -69,7 +80,7 @@ export default function AdminProductForm() {
   }, [existing]);
 
   const selectedCategory = categories.find((c) => c.slug === categorySlug);
-  const brandMeta = brands.find((b) => b.slug === form.brand);
+  const brandMeta = brandOptions.find((b) => b.slug === form.brand);
 
   const update = (field) => (e) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -227,7 +238,7 @@ price: Number(next.price),
               className="w-full cursor-pointer rounded-xl border border-line bg-card px-4 py-2.5 text-sm text-ink focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/15"
             >
               <option value="">انتخاب برند…</option>
-              {brands.map((b) => (
+              {brandOptions.map((b) => (
                 <option key={b.slug} value={b.slug}>{b.name}</option>
               ))}
             </select>

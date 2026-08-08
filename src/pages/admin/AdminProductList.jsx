@@ -17,10 +17,11 @@ import Input from "../../components/ui/Input.jsx";
 import Modal from "../../components/ui/Modal.jsx";
 import Badge from "../../components/ui/Badge.jsx";
 
-const STOCK_BADGE = {
-  "in-stock": { label: "موجود", variant: "success" },
-  "out-of-stock": { label: "ناموجود", variant: "neutral" },
-  soon: { label: "به‌زودی", variant: "discount" },
+// موجودی محصولات عددی است؛ بر اساس مقدار، وضعیت نمایش داده می‌شود
+const stockBadge = (stock) => {
+  if (stock <= 0) return { label: "ناموجود", variant: "neutral" };
+  if (stock < 10) return { label: `${toFaDigits(stock)} عدد — کم`, variant: "discount" };
+  return { label: `${toFaDigits(stock)} عدد`, variant: "success" };
 };
 
 const BADGE_MAP = {
@@ -60,9 +61,10 @@ export default function AdminProductList() {
     });
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE) || 1;
-  if (page > totalPages) setPage(totalPages);
+  // صفحهٔ امن — بدون setState در حین رندر (که هشدار React می‌دهد)
+  const safePage = Math.min(page, totalPages);
 
-  const paged = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const paged = filtered.slice((safePage - 1) * PER_PAGE, safePage * PER_PAGE);
 
   const handleSort = (key) => {
     if (sortKey === key) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
@@ -169,10 +171,10 @@ export default function AdminProductList() {
                     </td>
                     <td className="px-4 py-3">
                       <Badge
-                        variant={STOCK_BADGE[p.stock]?.variant || "neutral"}
+                        variant={stockBadge(p.stock).variant}
                         className="text-[11px]"
                       >
-                        {STOCK_BADGE[p.stock]?.label || p.stock}
+                        {stockBadge(p.stock).label}
                       </Badge>
                     </td>
                     <td className="px-4 py-3">
@@ -215,13 +217,13 @@ export default function AdminProductList() {
         {totalPages > 1 && (
           <div className="flex items-center justify-between border-t border-line px-4 py-3">
             <p className="text-xs text-muted">
-              نمایش {toFaDigits((page - 1) * PER_PAGE + 1)} تا {toFaDigits(Math.min(page * PER_PAGE, filtered.length))} از {toFaDigits(filtered.length)}
+              نمایش {toFaDigits((safePage - 1) * PER_PAGE + 1)} تا {toFaDigits(Math.min(safePage * PER_PAGE, filtered.length))} از {toFaDigits(filtered.length)}
             </p>
             <div className="flex gap-1.5">
               <button
                 type="button"
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
+                disabled={safePage === 1}
                 className="flex size-8 cursor-pointer items-center justify-center rounded-lg border border-line bg-card text-muted hover:bg-brand-50 hover:text-brand-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronRight className="size-4" />
@@ -229,7 +231,7 @@ export default function AdminProductList() {
               <button
                 type="button"
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
+                disabled={safePage === totalPages}
                 className="flex size-8 cursor-pointer items-center justify-center rounded-lg border border-line bg-card text-muted hover:bg-brand-50 hover:text-brand-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronLeft className="size-4" />
