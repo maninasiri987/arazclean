@@ -7,7 +7,7 @@
 - React 19 + Vite 6
 - Tailwind CSS v4 (پیکربندی از طریق `@theme` در `src/index.css`)
 - Lucide Icons (`lucide-react`)
-- فونت: **B Yekan+** (فایل‌ها در `public/fonts/`) — با Vazirmatn از Google Fonts به‌عنوان جایگزین
+- فونت: **B Yekan+** (فایل‌ها در `public/fonts/` — WOFF2 + TTF). بازسازی WOFF2: `npm run fonts`
 
 ## پالت رنگ برند
 

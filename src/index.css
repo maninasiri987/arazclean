@@ -8,14 +8,16 @@
 
 @font-face {
   font-family: "B Yekan+";
-  src: url("/fonts/BYekan+.ttf") format("truetype");
+  src: url("/fonts/BYekan+.woff2") format("woff2"),
+    url("/fonts/BYekan+.ttf") format("truetype");
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: "B Yekan+";
-  src: url("/fonts/BYekan-Bold.ttf") format("truetype");
+  src: url("/fonts/BYekan-Bold.woff2") format("woff2"),
+    url("/fonts/BYekan-Bold.ttf") format("truetype");
   font-weight: 700;
   font-display: swap;
 }
@@ -26,7 +28,7 @@
 
 @theme {
   /* ---------- فونت ---------- */
-  --font-sans: "B Yekan+", "Vazirmatn", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "B Yekan+", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* ---------- رنگ‌های برند ---------- */
   /* رنگ‌های اصلی (دقیقاً از برند): */

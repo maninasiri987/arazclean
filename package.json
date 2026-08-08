@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fonts": "node scripts/woff2.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.469.0",
@@ -20,6 +21,7 @@
     "@tailwindcss/vite": "^4.1.0",
     "@vitejs/plugin-react": "^4.5.0",
     "tailwindcss": "^4.1.0",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "wawoff2": "^2.0.1"
   }
 }
