@@ -13,7 +13,8 @@ import {
   setCatalogData,
 } from "../services/catalog.js";
 
-const STORAGE_KEY = "arazclean-admin-store-v1";
+// نسخهٔ ۲ — بعد از حذف محصولات بدون تصویر؛ تا دادهٔ کش‌شدهٔ قدیمی روی نسخهٔ جدید ننشیند
+const STORAGE_KEY = "arazclean-admin-store-v2";
 
 /**
  * مخزن دادهٔ پنل مدیریت — منبع واحد محصولات/برندها/اسلایدرها.
