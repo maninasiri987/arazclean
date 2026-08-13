@@ -127,29 +127,16 @@ export default function HeroSlider() {
                   className="relative flex h-full w-full shrink-0 snap-start items-center overflow-hidden"
                   style={bgStyle}
                 >
-                  <div className="relative w-full px-6 py-6 sm:px-14 sm:py-12 lg:px-20">
-                    <div className="max-w-xl space-y-3 sm:space-y-5">
-                      {slide.badge && (
-                        <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm sm:text-sm">
-                          <Sparkles className="size-3.5 sm:size-4" aria-hidden="true" />
-                          <span>{slide.badge}</span>
-                        </div>
-                      )}
-                      <Heading className="text-2xl font-black leading-tight text-slate-900 drop-shadow-sm sm:text-4xl lg:text-5xl">
-                        {slide.title}
-                      </Heading>
-                      <div className="pt-2 sm:pt-4 flex items-center gap-3">
-                        <Button
-                          to={slide.ctaTo}
-                          variant="primary"
-                          size="lg"
-                          className="!px-6 !py-3 font-black text-sm sm:text-base shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
-                        >
-                          <span>{slide.ctaLabel}</span>
-                          <ArrowLeft className="size-4.5 -scale-x-100" />
-                        </Button>
-                      </div>
-                    </div>
+                  <div className="relative flex h-full w-full items-center justify-start px-6 sm:px-14 lg:px-20">
+                    <Button
+                      to={slide.ctaTo}
+                      variant="primary"
+                      size="lg"
+                      className="!px-7 !py-3.5 font-black text-sm sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2.5 rounded-2xl"
+                    >
+                      <span>{slide.ctaLabel}</span>
+                      <ArrowLeft className="size-5 -scale-x-100" />
+                    </Button>
                   </div>
                 </div>
                 );
