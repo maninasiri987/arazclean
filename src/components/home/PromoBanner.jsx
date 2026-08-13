@@ -9,16 +9,6 @@ export default function PromoBanner() {
   return (
     <section aria-label="بنر تبلیغاتی" className="cv-section max-w-site mx-auto px-4 sm:px-6 lg:px-8">
       <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-l from-brand-700 via-brand-600 to-trust-700 p-5 sm:p-8 lg:p-10 shadow-xl">
-        {/* پترن پس‌زمینه تزئینی */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.6) 1px, transparent 0)",
-            backgroundSize: "20px 20px",
-          }}
-        />
         <div aria-hidden="true" className="absolute -right-16 -top-16 size-56 rounded-full bg-white/10 blur-xl" />
         <div aria-hidden="true" className="absolute -bottom-20 -left-12 size-64 rounded-full bg-brand-400/20 blur-xl" />
 
