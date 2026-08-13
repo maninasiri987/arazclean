@@ -24,6 +24,13 @@
     "badge": "پرفروش",
     "placeholder": "product",
     "image": "/images/products/product-1.webp",
+    "images": [
+      "/images/products/product-1.webp"
+    ],
+    "comments": [
+      { "name": "مریم احمدی", "rating": 4.5, "text": "کیفیت بسیار خوبی داشت و خیلی سریع ارسال شد. حتماً دوباره خرید می‌کنم.", "date": "۳ روز پیش", "verified": true },
+      { "name": "علی رستمی", "rating": 4, "text": "نسبت به قیمتش عملکرد عالی داره. کفش زیاده و رایحه‌ش هم موندگاره.", "date": "۱ هفته پیش", "verified": true }
+    ],
     "featured": true,
     "isNew": false
   },
@@ -52,6 +59,14 @@
     "badge": "پرفروش",
     "placeholder": "product",
     "image": "/images/products/product-2.webp",
+    "images": [
+      "/images/products/product-2.webp"
+    ],
+    "comments": [
+      { "name": "سارا موسوی", "rating": 5, "text": "بسته‌بندی تمیز و مرتب بود. لباس‌ها واقعاً تمیزتر از قبل می‌شن.", "date": "۵ روز پیش", "verified": true },
+      { "name": "رضا کریمی", "rating": 4.5, "text": "پودر خوبیه، بو و کفش عالیه. قیمتش هم منصفانه‌ست.", "date": "۲ هفته پیش", "verified": true },
+      { "name": "نگار صادقی", "rating": 4, "text": "برای لکه‌های سخت هم جواب می‌ده. حتماً معرفی می‌کنم.", "date": "۱ ماه پیش", "verified": false }
+    ],
     "featured": true,
     "isNew": false
   },
@@ -80,6 +95,14 @@
     "badge": "جدید",
     "placeholder": "product",
     "image": "/images/products/product-3.webp",
+    "images": [
+      "/images/products/product-3.webp"
+    ],
+    "comments": [
+      { "name": "حسین محمدی", "rating": 5, "text": "ظرف‌ها بدون هیچ لک و اثری از چربی تمیز می‌شن. خیلی راضی‌ام.", "date": "۲ روز پیش", "verified": true },
+      { "name": "زهرا نوری", "rating": 4.5, "text": "قرص‌ها واقعاً قوی هستن؛ حتی قابلمه‌های سوخته رو هم درمیاره.", "date": "۱ هفته پیش", "verified": true },
+      { "name": "امیر قاسمی", "rating": 4, "text": "بسته ۶۰تایی به‌صرفه‌ست. از نظر کیفیت با برندهای خارجی برابری می‌کنه.", "date": "۳ هفته پیش", "verified": false }
+    ],
     "featured": true,
     "isNew": true
   }

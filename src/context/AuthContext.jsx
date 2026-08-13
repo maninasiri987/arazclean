@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useStore } from "./StoreContext.jsx";
 
 const AuthContext = createContext(null);
 
@@ -15,6 +16,7 @@ const STORAGE_KEY = "arazclean-auth";
  * وضعیت ورود باقی بماند. در آینده با اتصال به API واقعی جایگزین می‌شود.
  */
 export function AuthProvider({ children }) {
+  const { addUser } = useStore();
   const [user, setUser] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -34,14 +36,20 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
-  const login = useCallback((data) => {
-    // نام کاربر: از دادهٔ ورود/ثبت‌نام
-    const name =
-      data.name ||
-      (data.identifier ? data.identifier.split("@")[0] : "") ||
-      "کاربر";
-    setUser({ name, identifier: data.identifier || data.mobile || "" });
-  }, []);
+  const login = useCallback(
+    (data) => {
+      // نام کاربر: از دادهٔ ورود/ثبت‌نام
+      const name =
+        data.name ||
+        (data.identifier ? data.identifier.split("@")[0] : "") ||
+        "کاربر";
+      const identifier = data.identifier || data.mobile || "";
+      setUser({ name, identifier });
+      // ثبت/به‌روزرسانی کاربر در لیست کاربران پنل مدیریت
+      addUser({ name, identifier });
+    },
+    [addUser]
+  );
 
   const logout = useCallback(() => setUser(null), []);
 

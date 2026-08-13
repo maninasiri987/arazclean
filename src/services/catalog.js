@@ -22,13 +22,14 @@ let navigationData = { ...navigationSeed };
 let settingsData = { ...settingsSeed };
 
 /**
- * همگام‌سازی داده از پنل مدیریت — بعد از تغییر، همهٔ صداهای بعدی
+ * همگام‌سازی داده از پنل مدیریت یا ووکامرس — بعد از تغییر، همهٔ صداهای بعدی
  * (محصولات، شمارنده‌ها، اسلایدر و…) مقدارهای جدید را برمی‌گردانند.
  */
-export const setCatalogData = ({ products, brands, hero, settings } = {}) => {
+export const setCatalogData = ({ products, brands, hero, categories, settings } = {}) => {
   if (products) productsData = [...products];
   if (brands) brandsData = [...brands];
   if (hero) heroData = [...hero];
+  if (categories) categoriesData = [...categories];
   if (settings) settingsData = { ...settings };
 };
 
@@ -106,13 +107,19 @@ export const getNewProducts = (limit = 8) =>
 
 export const getRelatedProducts = (product, limit = 4) =>
   productsData
-    .filter(
-      (p) =>
-        p.id !== product.id &&
-        (p.categorySlug === product.categorySlug ||
-          p.subcategorySlug === product.subcategorySlug ||
-          p.brandSlug === product.brandSlug)
-    )
+    .filter((p) => {
+      if (p.id === product.id) return false;
+      // زیردسته فقط وقتی مقایسه شود که هر دو محصول زیردسته دارند؛
+      // وگرنه محصولات بدون زیردسته (اضافه‌شده از ادمین) همه را هم‌خانواده نشان می‌دهند.
+      const sameSub =
+        Boolean(p.subcategorySlug && product.subcategorySlug) &&
+        p.subcategorySlug === product.subcategorySlug;
+      return (
+        p.categorySlug === product.categorySlug ||
+        sameSub ||
+        p.brandSlug === product.brandSlug
+      );
+    })
     .slice(0, limit);
 
 export const getProductsByCategory = (categorySlug) =>

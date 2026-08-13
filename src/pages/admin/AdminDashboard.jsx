@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle,
@@ -6,6 +7,9 @@ import {
   PackageX,
   ShoppingCart,
   TrendingUp,
+  UserCheck,
+  UserPlus,
+  Users,
 } from "lucide-react";
 import { useStore } from "../../context/StoreContext.jsx";
 import { formatPrice, toFaDigits } from "../../utils/format.js";
@@ -24,14 +28,51 @@ const STATUS_CLS = {
   cancelled: "bg-red-50 text-red-500",
 };
 
+const USER_STATUS = {
+  active: "فعال",
+  inactive: "غیرفعال",
+};
+
+const USER_STATUS_CLS = {
+  active: "bg-success-50 text-success-600",
+  inactive: "bg-background text-muted border border-line",
+};
+
 /**
  * داشبورد مدیریت — آمار کلی، نمودار فروش و وضعیت موجودی + سفارش‌های اخیر.
  */
 export default function AdminDashboard() {
   const store = useStore();
-  const { products, orders, sales, totalRevenue, lowStockProducts, outOfStockProducts } = store;
+  const {
+    products,
+    orders,
+    users,
+    sales,
+    totalRevenue,
+    lowStockProducts,
+    outOfStockProducts,
+  } = store;
 
   const maxSale = Math.max(...sales.map((s) => s.value), 1);
+
+  // ---------- نقاط نمودار خطی (SVG) ----------
+  const [hovered, setHovered] = useState(null);
+
+  const W = 100;
+  const H = 100;
+  const PAD = 8;
+  const { points, linePath, areaPath } = useMemo(() => {
+    if (!sales.length) return { points: [], linePath: "", areaPath: "" };
+    const n = sales.length;
+    const pts = sales.map((s, i) => {
+      const x = PAD + (i / (n - 1)) * (W - PAD * 2);
+      const y = H - PAD - (s.value / maxSale) * (H - PAD * 2);
+      return { ...s, x, y };
+    });
+    const line = pts.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+    const area = `${line} L${pts[pts.length - 1].x},${H} L${pts[0].x},${H} Z`;
+    return { points: pts, linePath: line, areaPath: area };
+  }, [sales, maxSale]);
 
   const cards = [
     {
@@ -75,6 +116,101 @@ export default function AdminDashboard() {
         ))}
       </div>
 
+      {/* کاربران سایت */}
+      <section className="rounded-card border border-line bg-card p-5 shadow-card">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <h2 className="flex items-center gap-2 text-sm font-black text-ink">
+            <Users className="size-4 text-brand-500" aria-hidden="true" />
+            کاربران و حساب‌ها
+          </h2>
+          <span className="text-[11px] text-muted">
+            {toFaDigits(users.length)} حساب ثبت‌شده
+          </span>
+        </div>
+
+        {/* آمار کاربران */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="flex items-center gap-3 rounded-xl border border-line bg-background/50 p-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+              <Users className="size-4.5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-lg font-black text-ink">{toFaDigits(users.length)}</p>
+              <p className="truncate text-[11px] text-muted">کل حساب‌ها</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-xl border border-line bg-background/50 p-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-success-50 text-success-600">
+              <UserCheck className="size-4.5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-lg font-black text-ink">
+                {toFaDigits(users.filter((u) => u.status === "active").length)}
+              </p>
+              <p className="truncate text-[11px] text-muted">حساب فعال</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-xl border border-line bg-background/50 p-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-trust-50 text-trust-600">
+              <UserPlus className="size-4.5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-lg font-black text-ink">
+                {toFaDigits(users.filter((u) => u.orders > 0).length)}
+              </p>
+              <p className="truncate text-[11px] text-muted">خریدار</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-xl border border-line bg-background/50 p-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+              <ShoppingCart className="size-4.5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-lg font-black text-ink">
+                {toFaDigits(users.reduce((s, u) => s + u.orders, 0))}
+              </p>
+              <p className="truncate text-[11px] text-muted">کل سفارش‌ها</p>
+            </div>
+          </div>
+        </div>
+
+        {/* فهرست کاربران و فعالیت */}
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full text-right text-xs">
+            <thead>
+              <tr className="border-b border-line text-[10px] uppercase text-muted/60">
+                <th className="px-2 py-2 font-bold">نام</th>
+                <th className="px-2 py-2 font-bold">شناسه / موبایل</th>
+                <th className="px-2 py-2 font-bold">نقش</th>
+                <th className="px-2 py-2 font-bold">سفارش‌ها</th>
+                <th className="px-2 py-2 font-bold">آخرین فعالیت</th>
+                <th className="px-2 py-2 font-bold">وضعیت</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.slice(0, 8).map((u) => (
+                <tr key={u.id} className="border-b border-line/60 last:border-0">
+                  <td className="px-2 py-2.5 font-bold text-ink">{u.name}</td>
+                  <td className="px-2 py-2.5 text-muted" dir="ltr">{u.identifier}</td>
+                  <td className="px-2 py-2.5 text-muted">{u.role}</td>
+                  <td className="px-2 py-2.5 font-bold text-ink">{toFaDigits(u.orders)}</td>
+                  <td className="px-2 py-2.5 text-muted">{u.lastActive}</td>
+                  <td className="px-2 py-2.5">
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${USER_STATUS_CLS[u.status]}`}>
+                      {USER_STATUS[u.status] || u.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-[11px] leading-5 text-muted">
+          کاربرانی که در سایت وارد/ثبت‌نام می‌شوند به‌صورت خودکار اینجا ثبت می‌شوند؛
+          در نسخهٔ وردپرس، کاربران از خود ووکامرس خوانده می‌شوند.
+        </p>
+      </section>
+
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_1.2fr]">
         {/* نمودار فروش */}
         <div className="rounded-card border border-line bg-card p-5 shadow-card">
@@ -85,30 +221,89 @@ export default function AdminDashboard() {
             </h2>
             <span className="text-[11px] text-muted">۱۴ روز اخیر</span>
           </div>
-          <div className="relative h-48 flex items-end justify-between gap-1.5">
-            {sales.map((s, i) => {
-              const h = Math.round((s.value / maxSale) * 150); // px height
-              return (
-                <div key={i} className="group relative flex h-full flex-1 flex-col items-center justify-end gap-1">
-                  <div className="relative w-full max-w-6">
-                    <div
-                      className={`w-full rounded-t-md transition-all duration-300 ${
-                        i === sales.length - 1
-                          ? "bg-brand-500"
-                          : "bg-brand-500/30 group-hover:bg-brand-500/60"
-                      }`}
-                      style={{ height: `${Math.max(h, 8)}px` }}
-                      role="img"
-                      aria-label={`روز ${toFaDigits(i + 1)}: ${toFaDigits(s.value)} میلیون`}
-                    />
-                    {/* text-card: در حالت روشن سفید و در تاریک تیره است — خوانایی در هر دو پوسته */}
-                    <span className="pointer-events-none absolute -top-6 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-1.5 py-0.5 text-[10px] font-bold text-card opacity-0 transition-opacity group-hover:opacity-100">
-                      {toFaDigits(s.value)}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="relative h-48">
+            {/* نمودار خطی SVG — با گرادیان زیر خط و نقطه‌های هاور */}
+            <svg
+              viewBox={`0 0 ${W} ${H}`}
+              role="img"
+              aria-label="نمودار خطی روند فروش ۱۴ روز اخیر"
+              className="h-full w-full"
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient id="sales-line-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="var(--color-brand-500)" stopOpacity="0.28" />
+                  <stop offset="100%" stopColor="var(--color-brand-500)" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+
+              {/* خطوط شبکهٔ افقی */}
+              {[0.25, 0.5, 0.75, 1].map((f) => (
+                <line
+                  key={f}
+                  x1={PAD}
+                  x2={W - PAD}
+                  y1={PAD + (1 - f) * (H - PAD * 2)}
+                  y2={PAD + (1 - f) * (H - PAD * 2)}
+                  stroke="var(--color-line)"
+                  strokeWidth="0.4"
+                  strokeDasharray="2 2"
+                />
+              ))}
+
+              {/* ناحیهٔ زیر خط (گرادیان) */}
+              {areaPath && (
+                <path d={areaPath} fill="url(#sales-line-fill)" />
+              )}
+
+              {/* خود خط فروش */}
+              {linePath && (
+                <path
+                  d={linePath}
+                  fill="none"
+                  stroke="var(--color-brand-500)"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              )}
+
+              {/* نقاط داده — با هاور نمایش مقدار */}
+              {points.map((p, i) => (
+                <g
+                  key={i}
+                  className="cursor-pointer"
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered(null)}
+                >
+                  {/* ناحیهٔ لمس بزرگ‌تر برای هاور راحت‌تر */}
+                  <circle cx={p.x} cy={p.y} r="6" fill="transparent" />
+                  <circle
+                    cx={p.x}
+                    cy={p.y}
+                    r={hovered === i ? 2.2 : 1.4}
+                    fill="var(--color-card)"
+                    stroke="var(--color-brand-500)"
+                    strokeWidth="1.2"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </g>
+              ))}
+            </svg>
+
+            {/* مقدار نقطهٔ هاورشده */}
+            {hovered !== null && points[hovered] && (
+              <span
+                className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-md bg-ink px-2 py-1 text-[10px] font-bold text-card shadow-pop"
+                style={{
+                  left: `${points[hovered].x}%`,
+                  top: `${points[hovered].y}%`,
+                }}
+              >
+                {toFaDigits(points[hovered].value)} میلیون
+              </span>
+            )}
           </div>
           <div className="mt-2 flex justify-between border-t border-line pt-2 text-[10px] text-muted/70">
             <span>تازه</span>

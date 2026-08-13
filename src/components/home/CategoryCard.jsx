@@ -31,8 +31,8 @@ const styles = {
 const fallback = { icon: Layers, bg: "from-background to-brand-50", text: "text-brand-600" };
 
 /**
- * کارت دسته‌بندی — کاشی فشرده به‌سبک دیجی‌کالا:
- * آیکون رنگی در قاب گرد + عنوان + تعداد محصولات.
+ * کارت دسته‌بندی — دایرهٔ رنگی با آیکون + عنوان + تعداد محصولات.
+ * هم‌سبک با کارت‌های دایره‌ای برندها (لوگو در حلقهٔ گرد).
  */
 function CategoryCard({ category }) {
   const cfg = styles[category.icon] || fallback;
@@ -44,14 +44,15 @@ function CategoryCard({ category }) {
       to={`/category/${category.slug}`}
       onMouseEnter={() => prefetchPage("/category")}
       onFocus={() => prefetchPage("/category")}
-      className="group flex w-32 shrink-0 flex-col items-center gap-2.5 rounded-2xl border border-line bg-card p-4 text-center shadow-card transition-[box-shadow,border-color] duration-300 hover:border-brand-500/40 hover:shadow-card-hover sm:w-36"
+      className="group flex w-24 shrink-0 flex-col items-center gap-2.5 sm:w-28"
+      aria-label={`دسته‌بندی ${category.title} — ${formatNumber(count)} محصول`}
     >
       <span
-        className={`flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${cfg.bg} ${cfg.text} transition-transform duration-300 group-hover:scale-110`}
+        className={`flex size-20 items-center justify-center rounded-full bg-gradient-to-br shadow-card ring-1 ring-inset ring-line/60 transition-[box-shadow,transform] duration-300 group-hover:-translate-y-0.5 group-hover:shadow-card-hover sm:size-24 ${cfg.bg}`}
       >
-        <Icon className="size-7" strokeWidth={1.8} aria-hidden="true" />
+        <Icon className={`size-8 sm:size-9 ${cfg.text}`} strokeWidth={1.8} aria-hidden="true" />
       </span>
-      <span className="min-h-10 text-xs font-black leading-5 text-ink transition-colors group-hover:text-brand-600 sm:text-sm">
+      <span className="min-h-8 text-center text-xs font-black leading-4 text-ink transition-colors group-hover:text-brand-600 sm:text-sm">
         {category.title}
       </span>
       <span className="text-[11px] font-medium text-muted">

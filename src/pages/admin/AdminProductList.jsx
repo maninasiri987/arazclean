@@ -16,6 +16,8 @@ import Button from "../../components/ui/Button.jsx";
 import Input from "../../components/ui/Input.jsx";
 import Modal from "../../components/ui/Modal.jsx";
 import Badge from "../../components/ui/Badge.jsx";
+import SmartImage from "../../components/ui/SmartImage.jsx";
+import ImagePlaceholder from "../../components/ui/ImagePlaceholder.jsx";
 
 // موجودی محصولات عددی است؛ بر اساس مقدار، وضعیت نمایش داده می‌شود
 const stockBadge = (stock) => {
@@ -161,8 +163,24 @@ export default function AdminProductList() {
                     <td className="px-4 py-3 font-bold text-muted">
                       {toFaDigits(p.id)}
                     </td>
-                    <td className="px-4 py-3 max-w-xs truncate font-bold text-ink">
-                      {p.title}
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <span className="size-10 shrink-0 overflow-hidden rounded-lg border border-line bg-background">
+                          {p.image ? (
+                            <SmartImage
+                              src={p.image}
+                              alt={p.title}
+                              className="h-full w-full"
+                              imgClassName="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <ImagePlaceholder type="product" aspect="aspect-square" />
+                          )}
+                        </span>
+                        <span className="max-w-xs truncate font-bold text-ink">
+                          {p.title}
+                        </span>
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-muted">{p.brand}</td>
                     <td className="px-4 py-3 text-muted">{p.category}</td>

@@ -25,6 +25,7 @@ import {
   AdminProductForm,
   AdminSliders,
   AdminBrands,
+  AdminBrandForm,
   NotFoundPage,
 } from "./routes.js";
 
@@ -109,6 +110,8 @@ export default function App() {
               <Route path="products/:id" element={<AdminProductForm />} />
               <Route path="sliders" element={<AdminSliders />} />
               <Route path="brands" element={<AdminBrands />} />
+              <Route path="brands/:slug" element={<AdminBrandForm />} />
+              <Route path="brands/new" element={<AdminBrandForm />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

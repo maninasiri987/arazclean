@@ -108,7 +108,10 @@ export default function HeroSlider() {
             style={{ scrollSnapType: "x mandatory" }}
           >
             <div className="flex h-full" aria-live="polite">
-              {slides.map((slide) => (
+              {slides.map((slide, i) => {
+                // فقط اسلایدِ نمایش‌داده‌شده <h1> است؛ بقیه <h2> — هر صفحه فقط یک h1 (سئو)
+                const Heading = i === index ? "h1" : "h2";
+                return (
                 <div
                   key={slide.id}
                   className="relative h-full w-full shrink-0 snap-start overflow-hidden"
@@ -132,9 +135,9 @@ export default function HeroSlider() {
                           {slide.badge}
                         </span>
                       )}
-                      <h1 className="mt-3 text-xl font-black leading-[1.2] text-white drop-shadow-sm sm:mt-4 sm:text-3xl lg:text-4xl">
+                      <Heading className="mt-3 text-xl font-black leading-[1.2] text-white drop-shadow-sm sm:mt-4 sm:text-3xl lg:text-4xl">
                         {slide.title}
-                      </h1>
+                      </Heading>
                       <p className="mt-3 hidden max-w-md text-sm leading-7 text-white/90 sm:mt-4 sm:block sm:text-base">
                         {slide.description}
                       </p>
@@ -146,7 +149,8 @@ export default function HeroSlider() {
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

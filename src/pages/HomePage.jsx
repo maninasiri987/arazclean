@@ -27,6 +27,9 @@ export default function HomePage() {
       <div className="space-y-14 pb-16 pt-4 sm:space-y-20 sm:pt-6">
         <HeroSlider />
 
+        {/* دسته‌بندی محصولات — دایره‌ای، بالای برندهای معتبر */}
+        <CategoryRow />
+
         {/* برندهای معتبر — بالای پرفروش‌ترین‌ها */}
         <BrandLogoGrid />
 
@@ -41,9 +44,6 @@ export default function HomePage() {
             <ProductGrid products={featured} />
           </Reveal>
         </section>
-
-        {/* دسته‌بندی محصولات — پایین پرفروش‌ترین‌ها */}
-        <CategoryRow />
 
         <PromoBanner />
 

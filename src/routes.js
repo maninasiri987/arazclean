@@ -24,6 +24,8 @@ export const routeLoaders = {
   "/admin/products/new": () => import("./pages/admin/AdminProductForm.jsx"),
   "/admin/sliders": () => import("./pages/admin/AdminSliders.jsx"),
   "/admin/brands": () => import("./pages/admin/AdminBrands.jsx"),
+  "/admin/brands/:slug": () => import("./pages/admin/AdminBrandForm.jsx"),
+  "/admin/brands/new": () => import("./pages/admin/AdminBrandForm.jsx"),
 };
 
 export const HomePage = lazy(routeLoaders["/"]);
@@ -42,4 +44,5 @@ export const AdminProductList = lazy(routeLoaders["/admin/products"]);
 export const AdminProductForm = lazy(routeLoaders["/admin/products/:id"]);
 export const AdminSliders = lazy(routeLoaders["/admin/sliders"]);
 export const AdminBrands = lazy(routeLoaders["/admin/brands"]);
+export const AdminBrandForm = lazy(routeLoaders["/admin/brands/:slug"]);
 export const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml — آراز کلین
+
+  نکته‌ها:
+  - این نسخه از HashRouter استفاده می‌کند؛ موتورهای جستجو فقط آدرس اصلی (بدون hash)
+    را به‌صورت واقعی قابل خزش می‌بینند، بنابراین فقط ریشهٔ سایت فهرست شده است.
+  - پس از فعال‌سازی مسیرهای تمیز (BrowserRouter) صفحات داخلی (/products، /about و…)
+    را با <lastmod> مناسب به همین فایل اضافه کنید.
+  - آدرس‌های زیر باید با دامنهٔ اصلی سایت هماهنگ باشند.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://arazclean.ir/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

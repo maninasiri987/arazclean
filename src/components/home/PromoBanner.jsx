@@ -27,7 +27,7 @@ export default function PromoBanner() {
               جشنوارهٔ تابستانه
             </span>
             <h2 className="mt-4 text-2xl font-black leading-snug text-white sm:text-3xl">
-              خرید عمدهٔ شوینده‌ها با تخفیف‌های ویژه
+              خرید شوینده‌ها با تخفیف‌های ویژه
             </h2>
             <p className="mt-3 max-w-lg text-sm leading-7 text-white/85">
               برای خانواده‌ها، هتل‌ها و مراکز خدماتی؛ سبد کامل محصولات نظافت را با

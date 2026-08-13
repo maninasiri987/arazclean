@@ -1,0 +1,9 @@
+# robots.txt — آراز کلین
+#
+# ⚠️ اگر دامنهٔ اصلی سایت با https://arazclean.ir متفاوت است،
+#    آدرس Sitemap زیر را به‌روزرسانی کنید.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://arazclean.ir/sitemap.xml

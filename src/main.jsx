@@ -14,17 +14,17 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <HelmetProvider>
       <ToastProvider>
-        <AuthProvider>
-          <CartProvider>
-            <StoreProvider>
+        <StoreProvider>
+          <AuthProvider>
+            <CartProvider>
               <HashRouter>
                 <AdminThemeProvider>
                   <App />
                 </AdminThemeProvider>
               </HashRouter>
-            </StoreProvider>
-          </CartProvider>
-        </AuthProvider>
+            </CartProvider>
+          </AuthProvider>
+        </StoreProvider>
       </ToastProvider>
     </HelmetProvider>
   </StrictMode>

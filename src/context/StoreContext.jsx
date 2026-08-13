@@ -8,7 +8,7 @@ import {
 } from "react";
 import {
   getProducts,
-  getBrands,
+  getAllBrands,
   getHeroSlides,
   setCatalogData,
 } from "../services/catalog.js";
@@ -58,6 +58,19 @@ const genOrders = (products) => {
   }));
 };
 
+// دادهٔ نمایشیِ کاربران (آفلااین؛ در نسخهٔ نهایی از ووکامرس/وردپرس می‌آید)
+const genUsers = () =>
+  [
+    { name: "مریم احمدی", identifier: "09121112233", role: "مشتری", status: "active", orders: 12, lastActive: "چند دقیقه پیش" },
+    { name: "علی رستمی", identifier: "ali.r@email.com", role: "مشتری", status: "active", orders: 7, lastActive: "۱ ساعت پیش" },
+    { name: "سارا موسوی", identifier: "09123334455", role: "مشتری", status: "active", orders: 15, lastActive: "۳ ساعت پیش" },
+    { name: "رضا کریمی", identifier: "reza.k@email.com", role: "مشتری", status: "inactive", orders: 3, lastActive: "۲ روز پیش" },
+    { name: "نگار صادقی", identifier: "09125556677", role: "مشتری", status: "active", orders: 9, lastActive: "دیروز" },
+    { name: "حسین محمدی", identifier: "hosein.m@email.com", role: "مشتری", status: "active", orders: 5, lastActive: "۴ روز پیش" },
+    { name: "زهرا نوری", identifier: "09127778899", role: "مشتری", status: "inactive", orders: 1, lastActive: "۱ هفته پیش" },
+    { name: "امیر قاسمی", identifier: "amir.g@email.com", role: "مشتری", status: "active", orders: 11, lastActive: "۲ ساعت پیش" },
+  ].map((u, i) => ({ id: 1001 + i, ...u }));
+
 export function StoreProvider({ children }) {
   const [products, setProducts] = useState(() => {
     try {
@@ -73,16 +86,25 @@ export function StoreProvider({ children }) {
   });
 
   const [brands, setBrands] = useState(() => {
+    // همهٔ برندهای تعریف‌شده (برندهای.json) را پایه می‌گیریم — نه فقط برندهایی
+    // که محصول دارند؛ تا پنل مدیریت همهٔ برندها را ببیند و ویرایش کند.
+    const defined = getAllBrands();
+    const map = new Map(defined.map((b) => [b.slug, b]));
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const saved = JSON.parse(raw);
-        if (saved.brands) return saved.brands;
+        if (saved.brands) {
+          // برندهای ذخیره‌شده (مثلاً ویرایش‌شده یا افزوده‌شده در ادمین) روی
+          // برندهای تعریف‌شده می‌نشینند؛ برندهای تعریف‌شده‌ای که در localStorage
+          // نیستند هم حفظ می‌شوند تا هیچ برندی از پنل ناپدید نشود.
+          saved.brands.forEach((b) => map.set(b.slug, { ...(map.get(b.slug) || {}), ...b }));
+        }
       }
     } catch {
       /* ignore */
     }
-    return getBrands();
+    return Array.from(map.values());
   });
 
   const [slides, setSlides] = useState(() => {
@@ -111,16 +133,29 @@ export function StoreProvider({ children }) {
     return genOrders(getProducts());
   });
 
+  const [users, setUsers] = useState(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (saved.users) return saved.users;
+      }
+    } catch {
+      /* ignore */
+    }
+    return genUsers();
+  });
+
   // همگام‌سازی با localStorage + لایهٔ داده
   useEffect(() => {
-    const payload = { products, brands, slides, orders };
+    const payload = { products, brands, slides, orders, users };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch {
       /* ignore */
     }
     setCatalogData({ products, brands, hero: slides });
-  }, [products, brands, slides, orders]);
+  }, [products, brands, slides, orders, users]);
 
   // ---------- محصولات ----------
   const addProduct = useCallback((product) => {
@@ -173,6 +208,34 @@ export function StoreProvider({ children }) {
     setSlides((prev) => prev.filter((s) => s.id !== Number(id)));
   }, []);
 
+  // ---------- کاربران ----------
+  /** ثبت کاربر جدید (یا به‌روزرسانی فعالیت کاربر موجود) هنگام ورود/ثبت‌نام */
+  const addUser = useCallback(({ name = "", identifier = "", role = "مشتری" }) => {
+    setUsers((prev) => {
+      const id = (identifier || name || "").trim().toLowerCase();
+      const existing = prev.find(
+        (u) => (u.identifier || "").trim().toLowerCase() === id
+      );
+      if (existing) {
+        return prev.map((u) =>
+          u.id === existing.id ? { ...u, name: name || u.name, status: "active", lastActive: "همین الان" } : u
+        );
+      }
+      return [
+        ...prev,
+        {
+          id: prev.length ? Math.max(...prev.map((u) => u.id)) + 1 : 1001,
+          name: name || "کاربر",
+          identifier,
+          role,
+          status: "active",
+          orders: 0,
+          lastActive: "همین الان",
+        },
+      ];
+    });
+  }, []);
+
   // ---------- فروش (نمایشی) ----------
   const sales = useMemo(() => genSales(), []);
   const totalRevenue = useMemo(
@@ -205,6 +268,7 @@ export function StoreProvider({ children }) {
       brands,
       slides,
       orders,
+      users,
       sales,
       totalRevenue,
       lowStockProducts,
@@ -218,6 +282,7 @@ export function StoreProvider({ children }) {
       addSlide,
       updateSlide,
       deleteSlide,
+      addUser,
       resetDemoData,
     }),
     [
@@ -225,6 +290,7 @@ export function StoreProvider({ children }) {
       brands,
       slides,
       orders,
+      users,
       sales,
       totalRevenue,
       lowStockProducts,
@@ -238,6 +304,7 @@ export function StoreProvider({ children }) {
       addSlide,
       updateSlide,
       deleteSlide,
+      addUser,
       resetDemoData,
     ]
   );

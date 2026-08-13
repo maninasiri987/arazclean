@@ -8,7 +8,6 @@ import {
   LayoutDashboard,
   Moon,
   Package,
-  RotateCcw,
   Store,
   Sun,
   Tags,
@@ -133,16 +132,6 @@ export default function AdminLayout() {
                 </Link>
               </div>
 
-              <div className="mt-2 border-t border-line pt-2">
-                <button
-                  type="button"
-                  onClick={() => store?.resetDemoData()}
-                  className="flex w-full cursor-pointer items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-xs font-bold text-muted transition-colors hover:bg-red-50 hover:text-red-500"
-                >
-                  <RotateCcw className="size-3.5" aria-hidden="true" />
-                  بازنشانی دادهٔ دمو
-                </button>
-              </div>
             </nav>
           </aside>
 

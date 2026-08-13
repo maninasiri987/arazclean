@@ -28,10 +28,14 @@ const TABS = [
  */
 export default function ProductTabs({ product }) {
   const [active, setActive] = useState("description");
-  const reviews = REVIEW_TEMPLATES.map((r, i) => ({
-    ...r,
-    rating: 3.5 + ((product.id + i) % 15) / 10,
-  }));
+  // اگر محصول نظر ثبت‌شده داشته باشد همان نمایش داده می‌شود؛ در غیر این صورت نمونهٔ نمایشی
+  const reviews =
+    product.comments && product.comments.length > 0
+      ? product.comments
+      : REVIEW_TEMPLATES.map((r, i) => ({
+          ...r,
+          rating: 3.5 + ((product.id + i) % 15) / 10,
+        }));
 
   return (
     <div className="rounded-card border border-line bg-card shadow-card">
@@ -96,7 +100,8 @@ export default function ProductTabs({ product }) {
               </div>
               <p className="text-sm leading-7 text-muted">{review.text}</p>
               <p className="mt-2 text-[11px] text-muted/60">
-                خریدار تأییدشده — {toFaDigits(12 + i)} روز پیش
+                {review.verified !== false ? "خریدار تأییدشده — " : ""}
+                {review.date || `${toFaDigits(12 + i)} روز پیش`}
               </p>
             </article>
           ))}
