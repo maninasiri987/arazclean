@@ -127,22 +127,22 @@ export default function HeroSlider() {
                   className="relative flex h-full w-full shrink-0 snap-start items-center overflow-hidden"
                   style={bgStyle}
                 >
-                  <div className="relative w-full px-4 py-4 sm:px-8 sm:py-8 lg:px-12">
-                    <div className="max-w-lg rounded-2xl bg-ink/60 p-4 shadow-2xl backdrop-blur-md border border-white/10 sm:p-7">
+                  <div className="relative w-full px-5 py-4 sm:px-12 sm:py-10 lg:px-16">
+                    <div className="max-w-xl">
                       {slide.badge && (
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold text-white shadow-sm sm:text-xs sm:py-1.5">
                           <Sparkles className="size-3 sm:size-3.5" aria-hidden="true" />
                           {slide.badge}
                         </span>
                       )}
-                      <Heading className="mt-2 text-base font-black leading-snug text-white drop-shadow-sm sm:mt-3 sm:text-2xl lg:text-3xl">
+                      <Heading className="mt-2 text-lg font-black leading-snug text-ink drop-shadow-sm sm:mt-4 sm:text-3xl lg:text-4xl">
                         {slide.title}
                       </Heading>
-                      <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-white/90 sm:mt-3 sm:line-clamp-none sm:text-sm sm:leading-6">
+                      <p className="mt-2 line-clamp-2 text-xs leading-6 text-muted font-medium sm:mt-4 sm:line-clamp-none sm:text-base sm:leading-7">
                         {slide.description}
                       </p>
-                      <div className="mt-3 sm:mt-5 flex items-center gap-3">
-                        <Button to={slide.ctaTo} variant="white" size="md" className="!px-4 !py-2 font-bold text-xs shadow-md transition-all sm:!px-5 sm:!py-2.5 sm:text-sm">
+                      <div className="mt-4 sm:mt-6 flex items-center gap-3">
+                        <Button to={slide.ctaTo} variant="primary" size="lg" className="!px-5 !py-2.5 font-bold text-xs sm:text-base shadow-md hover:shadow-lg transition-all">
                           {slide.ctaLabel}
                         </Button>
                       </div>
