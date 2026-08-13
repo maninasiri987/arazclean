@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { getHeroSlides } from "../../services/catalog.js";
+import { assetPath } from "../../utils/assets.js";
 import Button from "../ui/Button.jsx";
 
 const AUTOPLAY_DELAY = 6000;
@@ -111,34 +112,39 @@ export default function HeroSlider() {
               {slides.map((slide, i) => {
                 // فقط اسلایدِ نمایش‌داده‌شده <h1> است؛ بقیه <h2> — هر صفحه فقط یک h1 (سئو)
                 const Heading = i === index ? "h1" : "h2";
+                const isGradient = slide.image?.startsWith("linear-") || slide.image?.startsWith("radial-");
+                const bgStyle = isGradient
+                  ? { background: slide.image }
+                  : {
+                      backgroundImage: `url("${assetPath(slide.image)}")`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    };
+
                 return (
                 <div
                   key={slide.id}
                   className="relative h-full w-full shrink-0 snap-start overflow-hidden"
-                  style={{
-                    background: slide.image,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
+                  style={bgStyle}
                 >
-                  {/* گرادیان تیره برای خوانایی متن (سمت متن = راست) */}
+                  {/* گرادیان تیره برای خوانایی عالی متن در سمت راست */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-l from-ink/60 via-ink/25 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-l from-ink/80 via-ink/40 to-transparent"
                     aria-hidden="true"
                   />
 
                   <div className="relative w-full px-5 py-4 sm:px-12 sm:py-10 lg:px-16">
                     <div className="max-w-xl">
                       {slide.badge && (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1.5 text-xs font-bold text-white">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/80 backdrop-blur-md px-3 py-1.5 text-xs font-bold text-white shadow-sm">
                           <Sparkles className="size-3.5" aria-hidden="true" />
                           {slide.badge}
                         </span>
                       )}
-                      <Heading className="mt-3 text-xl font-black leading-[1.2] text-white drop-shadow-sm sm:mt-4 sm:text-3xl lg:text-4xl">
+                      <Heading className="mt-3 text-xl font-black leading-[1.2] text-white drop-shadow-md sm:mt-4 sm:text-3xl lg:text-4xl">
                         {slide.title}
                       </Heading>
-                      <p className="mt-3 hidden max-w-md text-sm leading-7 text-white/90 sm:mt-4 sm:block sm:text-base">
+                      <p className="mt-3 hidden max-w-md text-sm leading-7 text-white/95 drop-shadow sm:mt-4 sm:block sm:text-base">
                         {slide.description}
                       </p>
                       <div className="mt-5 hidden sm:mt-8 sm:block">

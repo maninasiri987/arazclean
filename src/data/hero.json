@@ -1,38 +1,38 @@
 [
   {
     "id": 1,
-    "badge": "پیشنهاد هفته",
-    "title": "خانه‌ای تمیزتر با آراز کلین",
-    "description": "کامل‌ترین سبد محصولات نظافت و شوینده برای هر گوشه از خانه شما؛ از ظرف‌شویی تا ضدعفونی‌کننده‌های حرفه‌ای.",
+    "badge": "پیشنهاد شگفت‌انگیز",
+    "title": "درخشش و پاکیزگی با آراز کلین",
+    "description": "تجربه‌ای نو از تمیزی بی‌نقص خانه و محیط کار با کامل‌ترین مجموعه شوینده‌های تخصصی و پریمیوم.",
     "ctaLabel": "مشاهده محصولات",
     "ctaTo": "/products",
-    "image": "radial-gradient(1100px 520px at 88% -8%, rgba(255,255,255,0.28), transparent 60%), radial-gradient(720px 420px at 4% 112%, rgba(255,255,255,0.14), transparent 55%), linear-gradient(130deg, #115e59 0%, #0ea5a4 52%, #5eead4 140%)"
+    "image": "/images/banners/hero-banner-1.jpg"
   },
   {
     "id": 2,
-    "badge": "جشنوارهٔ تابستانه",
-    "title": "تا ۳۰٪ تخفیف شوینده‌ها",
-    "description": "به مناسبت جشنوارهٔ تابستانه، منتخبی از پرفروش‌ترین شوینده‌ها با تخفیف‌های استثنایی عرضه شده‌اند.",
+    "badge": "جشنوارهٔ تخفیف ویژه",
+    "title": "لطافت و طراوت ماندگار البسه",
+    "description": "تخفیف‌های استثنایی روی انواع شوینده، نرم‌کننده و لکه‌برهای حرفه‌ای برای انواع منسوجات و لباس‌ها.",
     "ctaLabel": "خرید با تخفیف",
-    "ctaTo": "/products?sort=price-asc",
-    "image": "radial-gradient(1000px 500px at 92% -10%, rgba(255,255,255,0.25), transparent 55%), radial-gradient(760px 420px at 6% 110%, rgba(255,255,255,0.13), transparent 55%), linear-gradient(130deg, #1e3a8a 0%, #2563eb 52%, #93c5fd 145%)"
+    "ctaTo": "/products?sort=popular",
+    "image": "/images/banners/hero-banner-2.jpg"
   },
   {
     "id": 3,
-    "badge": "ضدعفونی مطمئن",
-    "title": "سلامت خانواده با ضدعفونی‌کننده‌ها",
-    "description": "محصولات ضدعفونی با قدرت حذف ۹۹.۹٪ باکتری‌ها و ویروس‌ها؛ محیطی امن برای عزیزانتان بسازید.",
+    "badge": "بهداشت و سلامت خانواده",
+    "title": "ضدعفونی هوشمند با سپر محافظ ۹۹.۹٪",
+    "description": "محیطی امن و بدون میکروب برای آسایش عزیزانتان با شوینده‌ها و ضدعفونی‌کننده‌های استاندارد.",
     "ctaLabel": "مشاهده ضدعفونی‌کننده‌ها",
     "ctaTo": "/category/disinfectants",
-    "image": "radial-gradient(1050px 520px at 10% -8%, rgba(255,255,255,0.22), transparent 55%), radial-gradient(720px 400px at 92% 112%, rgba(255,255,255,0.14), transparent 55%), linear-gradient(130deg, #14532d 0%, #16a34a 55%, #86efac 150%)"
+    "image": "/images/banners/hero-banner-3.jpg"
   },
   {
     "id": 4,
-    "badge": "محصولات جدید",
-    "title": "تازه‌های آراز کلین را کشف کنید",
-    "description": "جدیدترین محصولات نظافت با فناوری نانو، رایحه‌های دل‌پذیر و بسته‌بندی‌های سازگار با محیط زیست.",
-    "ctaLabel": "مشاهده تازه‌ها",
+    "badge": "فناوری سبز و نانو",
+    "title": "محصولات نوین و دوستدار محیط‌زیست",
+    "description": "قدرت پاک‌کنندگی شگفت‌انگیز با فرمولاسیون زیست‌تخریب‌پذیر و رایحه‌های دل‌انگیز طبیعی.",
+    "ctaLabel": "کشف محصولات نانو",
     "ctaTo": "/products?sort=newest",
-    "image": "radial-gradient(1000px 500px at 90% -6%, rgba(255,255,255,0.2), transparent 55%), radial-gradient(700px 420px at 4% 112%, rgba(255,255,255,0.12), transparent 55%), linear-gradient(130deg, #134e4a 0%, #0f766e 50%, #2dd4bf 145%)"
+    "image": "/images/banners/hero-banner-4.jpg"
   }
 ]

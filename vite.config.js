@@ -5,6 +5,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   // GitHub Pages — سایت در زیرمسیر /arazclean/ سرو می‌شود
   base: "/arazclean/",
+  server: {
+    host: "0.0.0.0",
+    port: 5173,
+    allowedHosts: true,
+  },
   plugins: [react(), tailwindcss()],
   build: {
     rollupOptions: {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Edit3, Image, Plus, Save, Sparkles, Trash2, X } from "lucide-react";
 import { useStore } from "../../context/StoreContext.jsx";
+import { assetPath } from "../../utils/assets.js";
 import Button from "../../components/ui/Button.jsx";
 import Input from "../../components/ui/Input.jsx";
 import Modal from "../../components/ui/Modal.jsx";
@@ -92,11 +93,15 @@ export default function AdminSliders() {
           >
             <div
               className="relative flex h-36 items-end p-4 text-white"
-              style={{
-                background: slide.image,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              style={
+                slide.image?.startsWith("linear-") || slide.image?.startsWith("radial-")
+                  ? { background: slide.image }
+                  : {
+                      backgroundImage: `url("${assetPath(slide.image)}")`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }
+              }
             >
               {slide.badge && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[11px] font-bold backdrop-blur-sm">
