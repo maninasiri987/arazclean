@@ -8,10 +8,7 @@ import SmartImage from "../ui/SmartImage.jsx";
 export default function PromoBanner() {
   return (
     <section aria-label="بنر تبلیغاتی" className="cv-section max-w-site mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-l from-brand-700 via-brand-600 to-trust-700 p-5 sm:p-8 lg:p-10 shadow-xl">
-        <div aria-hidden="true" className="absolute -right-16 -top-16 size-56 rounded-full bg-white/10 blur-xl" />
-        <div aria-hidden="true" className="absolute -bottom-20 -left-12 size-64 rounded-full bg-brand-400/20 blur-xl" />
-
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-brand-600 p-5 sm:p-8 lg:p-10">
         <div className="relative grid grid-cols-1 items-center gap-6 lg:grid-cols-[1.25fr_1fr] lg:gap-10">
           {/* متن و دکمه‌های کانتینر */}
           <div className="space-y-4">
@@ -40,12 +37,12 @@ export default function PromoBanner() {
             </div>
           </div>
 
-          {/* تصویر باکیفیت سکشن — نمایش در تمام اندازه‌ها */}
-          <div className="w-full overflow-hidden rounded-xl sm:rounded-2xl border border-white/30 shadow-2xl bg-white/10 backdrop-blur-sm">
+          {/* تصویر باکیفیت سکشن — بدون سایه، بدون بوردر سفید */}
+          <div className="w-full overflow-hidden rounded-xl sm:rounded-2xl">
             <SmartImage
               src="/images/banners/promo-clean.jpg"
               alt="خرید عمده و تکی شوینده‌ها با تخفیف‌های ویژه"
-              className="aspect-[16/9] sm:aspect-[16/10] w-full"
+              className="aspect-[16/9] sm:aspect-[16/10] w-full rounded-xl sm:rounded-2xl"
               imgClassName="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
             />
           </div>
