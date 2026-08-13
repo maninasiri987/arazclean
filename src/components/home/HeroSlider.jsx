@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, ArrowLeft } from "lucide-react";
 import { getHeroSlides } from "../../services/catalog.js";
 import { assetPath } from "../../utils/assets.js";
 import Button from "../ui/Button.jsx";
@@ -128,22 +128,23 @@ export default function HeroSlider() {
                   style={bgStyle}
                 >
                   <div className="relative w-full px-5 py-4 sm:px-12 sm:py-10 lg:px-16">
-                    <div className="max-w-xl">
+                    <div className="max-w-xl space-y-2 sm:space-y-3.5">
                       {slide.badge && (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold text-white shadow-sm sm:text-xs sm:py-1.5">
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/95 px-3 py-1 text-[11px] font-bold text-white shadow-sm sm:text-xs sm:py-1.5">
                           <Sparkles className="size-3 sm:size-3.5" aria-hidden="true" />
-                          {slide.badge}
-                        </span>
+                          <span>{slide.badge}</span>
+                        </div>
                       )}
-                      <Heading className="mt-2 text-lg font-black leading-snug text-ink drop-shadow-sm sm:mt-4 sm:text-3xl lg:text-4xl">
+                      <Heading className="text-xl font-black leading-tight text-ink drop-shadow-sm sm:text-3xl lg:text-4xl">
                         {slide.title}
                       </Heading>
-                      <p className="mt-2 line-clamp-2 text-xs leading-6 text-muted font-medium sm:mt-4 sm:line-clamp-none sm:text-base sm:leading-7">
+                      <p className="line-clamp-2 text-xs leading-6 text-muted font-medium sm:line-clamp-none sm:text-base sm:leading-7">
                         {slide.description}
                       </p>
-                      <div className="mt-4 sm:mt-6 flex items-center gap-3">
-                        <Button to={slide.ctaTo} variant="primary" size="lg" className="!px-5 !py-2.5 font-bold text-xs sm:text-base shadow-md hover:shadow-lg transition-all">
-                          {slide.ctaLabel}
+                      <div className="pt-2 sm:pt-4 flex items-center gap-3">
+                        <Button to={slide.ctaTo} variant="primary" size="lg" className="!px-5 !py-2.5 font-bold text-xs sm:text-base shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                          <span>{slide.ctaLabel}</span>
+                          <ArrowLeft className="size-4 -scale-x-100" />
                         </Button>
                       </div>
                     </div>
