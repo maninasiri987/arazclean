@@ -128,16 +128,19 @@ export default function HeroSlider() {
                   style={bgStyle}
                 >
                   <div className="relative w-full px-6 py-6 sm:px-14 sm:py-12 lg:px-20">
-                    <div className="max-w-xl space-y-3 sm:space-y-5">
-                      <Heading className="text-2xl font-black leading-tight text-slate-900 drop-shadow-sm sm:text-4xl lg:text-5xl tracking-tight">
+                    <div className="flex flex-col items-start gap-3 sm:gap-5">
+                      {/* تایتل با بکگراند و متن سفید دقیقاً مشابه دکمه — بدون حالت کلیک */}
+                      <Heading className="inline-flex cursor-default select-none items-center rounded-2xl bg-brand-500 px-5 py-2.5 text-base font-black text-white shadow-xl sm:px-8 sm:py-4 sm:text-2xl lg:text-3xl">
                         {slide.title}
                       </Heading>
-                      <div className="pt-1 sm:pt-3 flex items-center gap-3">
+
+                      {/* دکمهٔ مشاهده و خرید */}
+                      <div className="flex items-center gap-3">
                         <Button
                           to={slide.ctaTo}
-                          variant="primary"
+                          variant="white"
                           size="lg"
-                          className="!px-6 !py-3 font-black text-sm sm:text-base shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                          className="!px-6 !py-3 font-black text-xs sm:text-base shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 border border-brand-100"
                         >
                           <span>{slide.ctaLabel}</span>
                           <ArrowLeft className="size-4.5 -scale-x-100" />
