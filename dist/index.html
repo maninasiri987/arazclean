@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/arazclean/favicon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="آراز کلین — فروشگاه آنلاین محصولات نظافت و شوینده" />
+    <title>آراز کلین</title>
+    <!-- فونت‌های محلی B Yekan+ (WOFF2 — سریع‌تر از TTF) -->
+    <link rel="preload" href="/arazclean/fonts/BYekan+.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/arazclean/fonts/BYekan-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="module" crossorigin src="/arazclean/assets/index-Dg1FJn8r.js"></script>
+    <link rel="modulepreload" crossorigin href="/arazclean/assets/react-vendor-CZYaCwrq.js">
+    <link rel="stylesheet" crossorigin href="/arazclean/assets/index-NQzNrjV1.css">
+  </head>
+  <body>
+    <div id="root">
+      <!-- لودر اولیه — انیمیشن ساده در مرکز صفحه (قبل از بارگذاری جاوااسکریپت) -->
+      <div class="boot-screen" role="status" aria-label="در حال بارگذاری">
+        <div class="boot-center">
+          <div class="boot-spinner" aria-hidden="true"></div>
+        </div>
+      </div>
+      <style>
+        .boot-screen {
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #ffffff;
+        }
+        .boot-center {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .boot-spinner {
+          box-sizing: border-box;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          border: 4px solid rgba(14, 165, 164, 0.15);
+          border-top-color: #0ea5a4;
+          animation: boot-spin 0.9s linear infinite;
+        }
+        @keyframes boot-spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .boot-spinner {
+            animation: none;
+          }
+        }
+      </style>
+    </div>
+  </body>
+</html>

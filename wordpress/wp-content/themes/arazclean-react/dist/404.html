@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>در حال انتقال…</title>
+    <script>
+      // SPA fallback برای هاست‌های استاتیک: مسیر ناشناخته را به‌صورت hash حفظ می‌کند
+      // (برنامه از HashRouter استفاده می‌کند). روی وردپرس این فایل استفاده نمی‌شود.
+      (function () {
+        var rest = location.pathname.replace(/^\/+/, "");
+        window.location.replace(
+          location.origin + "/#/" + rest + location.search
+        );
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

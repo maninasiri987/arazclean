@@ -1,0 +1,1 @@
+import{j as s}from"./index-CmCGijFh.js";import{P as d}from"./ProductCard-CDm-MGwU.js";function m({products:i}){return s.jsx("div",{className:"grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4",children:i.map(r=>s.jsx(d,{product:r},r.id))})}export{m as P};

@@ -1,0 +1,11 @@
+import{c as d,S as t,j as a}from"./index-Dg1FJn8r.js";import{I as l}from"./image-BztpT8XC.js";/**
+ * @license lucide-react v0.469.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const p=d("BadgePercent",[["path",{d:"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z",key:"3c2336"}],["path",{d:"m15 9-6 6",key:"1uzhvr"}],["path",{d:"M9 9h.01",key:"1q5me6"}],["path",{d:"M15 15h.01",key:"lqbp3k"}]]);/**
+ * @license lucide-react v0.469.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const b=d("Layers",[["path",{d:"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z",key:"zw3jo"}],["path",{d:"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12",key:"1wduqc"}],["path",{d:"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17",key:"kqbvx6"}]]),n={product:{label:"تصویر محصول",gradient:"from-brand-50 via-card to-brand-100/60",icon:l},category:{label:"تصویر دسته‌بندی",gradient:"from-trust-50 via-card to-brand-50",icon:b},brand:{label:"لوگوی برند",gradient:"from-background via-card to-background",icon:t},hero:{label:"تصویر اسلایدر",gradient:"from-brand-500/10 via-card to-trust-500/10",icon:t},banner:{label:"تصویر تبلیغاتی",gradient:"from-brand-500/15 via-card to-trust-500/15",icon:p}};function u({type:c="product",label:r,className:i="",aspect:o="aspect-square"}){const e=n[c]||n.product,s=e.icon;return a.jsxs("div",{role:"img","aria-label":r||e.label,className:`relative flex w-full items-center justify-center overflow-hidden bg-gradient-to-br ${e.gradient} ${o} ${i}`,children:[a.jsx("div",{"aria-hidden":"true",className:"absolute inset-0 opacity-[0.35]",style:{backgroundImage:"radial-gradient(circle at 1px 1px, rgb(12 142 141 / 0.18) 1px, transparent 0)",backgroundSize:"18px 18px"}}),a.jsxs("div",{className:"relative flex flex-col items-center gap-2 text-brand-600/70",children:[a.jsx(s,{className:"size-10",strokeWidth:1.5,"aria-hidden":"true"}),a.jsx("span",{className:"text-[11px] font-bold tracking-wide",children:r||e.label})]})]})}export{p as B,u as I,b as L};

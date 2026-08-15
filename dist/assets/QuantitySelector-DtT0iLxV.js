@@ -1,0 +1,6 @@
+import{c as o,j as t,t as n}from"./index-Dg1FJn8r.js";import{P as d}from"./plus-D82QVak5.js";/**
+ * @license lucide-react v0.469.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const c=o("Minus",[["path",{d:"M5 12h14",key:"1ays0h"}]]);function x({value:e,onChange:s,max:i=99}){const r=()=>s(Math.min(e+1,i)),a=()=>s(Math.max(1,e-1));return t.jsxs("div",{className:"inline-flex items-center rounded-xl border border-line bg-card",children:[t.jsx("button",{type:"button",onClick:r,disabled:e>=i,"aria-label":"افزایش تعداد",className:"flex size-10 cursor-pointer items-center justify-center rounded-xl text-muted transition-colors hover:bg-brand-50 hover:text-brand-600 disabled:pointer-events-none disabled:opacity-40",children:t.jsx(d,{className:"size-4","aria-hidden":"true"})}),t.jsx("span",{className:"w-10 text-center text-sm font-black text-ink","aria-live":"polite","aria-label":`تعداد: ${n(e)}`,children:n(e)}),t.jsx("button",{type:"button",onClick:a,disabled:e<=1,"aria-label":"کاهش تعداد",className:"flex size-10 cursor-pointer items-center justify-center rounded-xl text-muted transition-colors hover:bg-brand-50 hover:text-brand-600 disabled:pointer-events-none disabled:opacity-40",children:t.jsx(c,{className:"size-4","aria-hidden":"true"})})]})}export{x as Q};
